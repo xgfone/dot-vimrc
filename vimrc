@@ -89,7 +89,11 @@ if has("gui_running")
     color default
     "color solarized
 else
-    color fisa
+    " for linux shell
+    "color fisa
+
+    " for mac shell
+    color tomorrow
 endif
 
 " highlight current line
