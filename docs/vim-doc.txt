@@ -1,0 +1,1643 @@
+
+
+                                VIM命令集
+
+                            整理者：sangay
+                            曾用名：xgfone、三界：天地人
+                            版  本：V_1.2
+
+
+
+
+                                   目录
+
+版    权
+版本历史
+说    明
+第1章  启动命令
+    1.1 Vim命令启动语法
+    1.2 命令含义
+第2章  启动选项（Options）
+第3章  模式及其切换
+第4章  光标移动
+    4.1 一般模式下的光标移动
+    4.2 在插入模式可使用的特殊键
+第5章  文本编辑
+    5.1  插入模式
+    5.2  插入特殊字符
+    5.3  插入二合字母
+    5.4  命令行编辑
+第6章  查找与替换
+    6.1 查 找
+    6.2 替 换
+第7章  删除、复制、粘贴以及撤消与重复
+    7.1 删 除
+    7.2 复 制
+    7.3 粘 贴
+    7.4 撤消与重复
+第8章  块（可视模式）
+第9章  多文件（缓冲区）编辑
+    9.1  多文件编辑
+    9.2  缓冲区
+第10章  多窗口功能
+    10.1 分割窗口
+    10.2 移动窗口
+    10.3 改变窗口大小
+    10.4 关闭窗口
+第11章  保存、离开以及执行Shell命令
+    11.1 保存、离开
+    11.2 执行Shell命令
+    11.3 暂停
+第12章  排版
+第13章  折叠
+第14章  语法高亮
+第15章  文件类型
+第16章  编辑程序
+第17章  配置脚本编写
+第18章  杂项
+    18.1 单词统计
+    18.2 转换UNIX与DOS格式
+    18.3 加密
+    18.4 单词补全
+    18.5 编码乱码问题
+    18.6 目录切换
+    18.7 编辑二进制文件
+    18.8 缩进
+    18.9 比较模式（diff）
+    18.10 会话（session）
+    18.11 匹配模式
+    18.12 十六进制模式
+    18.13 SPACE和TAB的转换
+    18.14 批量注释
+附录一  常用选项参数设置
+    一、选项设置方法
+    二、常用选项
+附录二  获取帮助信息
+附录三  Vim所支持的encoding值
+附录四  Vim配置文件推荐
+附录五  参 考
+
+
+
+                                版 权（COPYRIGHT）
+
+VIM命令集    VIM编辑器的命令总结
+© COPYRIGHT  sangay  2011-2012
+
+Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.3 or any later
+version published by the Free Software Foundation; with no Invariant Sections,
+no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
+included in the section entitled "GNU Free Documentation License".
+
+
+
+                                版本历史
+
+版本V_1.1更新记录（相对于版本V_1.0）：
+1、更改版权（由原来的版权更改到GFDL，GNU自由文档许可证）。
+2、在第3章另添加几种模式切换命令。
+3.、相对V_1.0，在V_1.1中添加“第5章 文本编辑”。
+4、把V_1.0中的4.3节移到了V_1.1中的5.4节。
+5、把V_1.0中的12.6节分解并分别移到了V_1.1中的5.2和5.3节。
+6、V_1.1中的第9章相对于V_1.0中的第8节，添加9.2章节。
+7、把V_1.0中的12.4节移到了V_1.1中的11.3节。
+8、添加第13、14、15、16、17章，但此时还未填写，有待以后补充。
+9、V_1.1中的第18章相对于V_1.0中的第12章，添加第18.6到18.11章节。
+10、把V_1.0中的第13章在V_1.1中调成附录一，并更新其内容。
+11、V_1.1增加附录二、三，但附录二还有待以后补充。
+12、V_1.1去掉了V_1.0中的第14章，并在附录一中体现。
+13、把V_1.0中的附录一、二分别调成V_1.1中的附录四、五。
+14、丰富某些章节的文笔，并小幅度更动部分章节的部分内容。
+
+
+
+                                说 明
+
+本文会用到一些术语，在此说明一下。
+
+1、光标所在处（位置）
+    在终端下的光标位置显示一般有三种形式：竖线、下划线、方框。其中后两种是一样，
+    只不过显示图形不一样而已，所以，终端下的光标显示形式有两类：竖线和下划线。
+    竖线位于两个字符之间，而下划线位于一个字符之上（即竖线后的那个字符），例如：
+    如果竖线位于字符串“China”的“h”字符和“i”字符之间，则相应的下划线就位于“i”字
+    符上，光标会在那一直闪烁。因此，本文中凡是用到此词语的，皆是此含义。
+
+2、M到N之间
+    指从位置M开始到位置N之间的所有字符，包括M和N处的字符，即是指一个闭区间，
+    如：[M, N]；除非有特别说明，本文皆应用此意。
+
+3、按键（部分）
+    <BS>指的是退格键<Backspace>
+    <UP>指的是向上的方向键
+    <DOWN>指的是向下的方向键
+    <LEFT>指的是向左的方向键
+    <RIGHT>指的是向右的方向键
+
+4、中括号（[ ]）
+    本文中使用到字符集如果用中括号括起来，而没有特殊说明时，表明该中括号中的字
+    符集可以省略也可以不省略。如：“:w[rite]”命令表示既可以写成“:w”，也可以写成
+    “:write”。
+
+另外，（1）本文只涉及到一些常用编辑命令，并未涉及到高级主题的使用，比如：高级编
+写程序源代码、高级排版等等。高级主题有待以后加入。（2）关于Vim的FAQ网上有很多，
+比如Vim标准官方文档中的FAQ：http://vimdoc.sourceforge.net/htmldoc/vim_faq.html；
+但是，大部分来说，我们并用不到，只有个别的问题才用得到FAQ，所以本文就只收录了一
+些常见问题的FAQ，比如：关于中文（以及其他亚洲各国的语言）乱码的问题，尤其是在
+Windows和Linux通讯时。这些FAQ小而零碎，可以把它们看成是一个未分类的小专题，因
+此，这些内容均放在了第12章节（“杂项”）里面作为一个小专题来陈述。
+
+注：本文在开始编辑时先用的是MS-Word字处理程序，但是Word字处理程序在不同的厂商出
+版的程序中会出现表格变化的情况，同时也使以后能够放置在文本文件中，所以，本文在
+编排时没有使用表格（这就造成了可能会在视觉上不是太好看）。
+
+
+
+                                第1章　启动命令
+
+1.1  Vim命令启动语法
+     vim [options] [file ..]
+     vim [options] -
+     vim [options] -t tag
+     vim [options] -q [errorfile]
+
+     ex
+     view
+     gvim gview evim eview
+     rvim rview rgvim rgview
+
+1.2  命令含义
+    Vim会根据不同命令有不同的表现，尽管它们可能是一个可执行文件。
+    vim         正常模式，所有都是默认状态
+    ex          以Ex模式运行，用“:vi”进入正常模式，也可以加上“-e”选项进入此模式
+    view        以只读模式运行，也可加上“-R”选项来进入此模式
+    gvim gview  GUI版本。也可加上“-g”选项来进入此模式
+    rvim rview rgvim rgview    同上，只是加上了限制，不能运行shell程序，也不能
+                               暂停Vim。也可加上“-Z”选项进入此模式
+
+
+
+                            第2章  启动选项（Options）
+
+选项可以以任意顺序给出，并且可以位于文件名列表前或后。
+
++[num]        打开文件并将光标定位于第n行的首字符处。如果没有给出“num”而只给出
+              了“+”，则将光标定位于最后一行的首字符处；如果给出多个文件，则此选
+              项只应用于第一个文件上
+
++/{pat}       打开文件并将光标定位于“{pat}”第一次出现的地方；如果给出多个文件，
+              则此选项只应用于第一个文件
+
+-b            二进制模式。将会设置一些选项以便于编辑一个二进制文件或可执行文件。
+
+-C            兼容性。设置“compatible”选项，这将使Vim兼容于Vi。
+
+-d            以diff模式启动。参数应该有两、三或四个文件，Vim将打开所有的文件并
+              显示不同之处。行为类似于vimdiff。
+
+-D            调试（debugging）。当执行一个脚本中的第一条命令时，进入到调试模式
+
+-e            以Ex模式启动Vim。就像调用ex命令一样。
+
+-E            以增强的Ex模式启动Vim。就像调用exim命令一样。
+
+-g            如果编译时已支持GUI，则这个选项将调用GUI版本的Vim；否则，将给出一
+              个错误信息并退出Vim
+
+-h            给出一个关于命令行参数和选项的、简洁的帮助信息，然后退出Vim
+
+-L            同-r选项
+
+-l            Lisp模式。打开“lisp”和“showmatch”选项
+
+-m            禁止文件修改。这个选项将重置“write”选项，你仍可以修改缓冲区，但不
+              能写入一个文件
+
+-M            禁止修改。选项“modifiable”和“write”被关闭，因此改变不被允许并且文
+              件不能被写入。
+
+-N            非兼容性模式。重置选项“compatible”
+
+-n            不使用交换文件。如果使用这个选项，则当文件出现问题之后，无法恢复。
+
+-R            只读模式。设置“readonly”选项，但仍然可以编辑缓冲区，但不能写入文
+              件。如果真想写入文件，可以使用“!”强制写入，如：“:w!”。这个选项也能
+              通过“:set noro”被重置。
+
+-r             列出交换文件——用于恢复文件
+
+-r {file}      恢复模式。
+
+-s {scriptin}  读取脚本文件{scriptin}并解析其中的字符
+
+-T {terminal}  告诉Vim你所使用的终端名字。这个选项仅当Vim无法自动识别时使用
+
+-u {vimrc}     使用文件{vimrc}中的命令进行初始化Vim，而其他的初始化都被跳过
+
+-U {gvimrc}    使用文件{gvimrc}中的命令进行初始化GUI版本的Vim，而其他的初始化都
+               被跳过
+
+-V             详细过程
+
+-x             当写入文件时将进行加密
+
+-X             不连接到X服务器
+
+-y             以简易（easy）模式启动Vim。就像调用evim或eview一样
+
+-Z             限制模式
+
+--             标识选项的结束，此后的所有参数都被作为文件处理
+
+--help         给出帮助信息，就像“-h”选项
+
+--remote       连接到一个远程的Vim服务器并使用它进行编辑所给出的参数中的文件；
+               如果找不到服务器，就使用当前的Vim进行编辑
+
+--serverlist   列出能够找到的所有Vim服务器
+
+--servername {name}   使用{name}作为服务器的名字
+
+--version      打印版本信息并退出
+
+注：对于更加详细的选项列表，请参见Vim官方手册。
+
+
+
+                                第3章  模式及其切换
+
+在Vim中，总共有6个基本模式，这些不同的基本模式完成不同的功能；这6个模式是：一般
+模式（又叫“普通模式”，normal）、插入模式（insert）、可视模式（visual）、选择模
+式（select）、命令行模式（command-line或Cmdline）、Ex模式。
+
+除了六种基本模式之外，Vim还有六种附加模式，这些附加模式都是在基本模式的基础之上
+变化而来的。这六种附加模式是：操作符等待模式（operator-pending）、替换模式
+（replace）、虚拟替换模式（virtual replace）、插入普通模式（insert normal）、插
+入可视模式（insert visual）、插入选择模式（insert select）。
+
+对于这12种模式，我们不需要全部都完全掌握，其中有些对于我们根本用不到或者不常用
+到，或者说不是太重要；然而有些模式是我们经常用到且非常重要的。
+
+以下介绍一般模式与插入模式、替换模式、命令行模式之间的切换，至于一般模式与可视
+模式的切换请参见第7章。
+
+以下为从一般模式进入其它模式的命令。
+i  I    进入插入模式
+          i为从当前光标所在处插入
+          I为从当前光标所在行的第一个非空格符处开始插入
+
+a  A    进入插入模式
+          a为从当前光标所在处的下一个字符处开始插入
+          A为从当前光标所在行的最后一个字符后开始插入
+
+o  O    进入插入模式
+          o为在当前光标所在行的下一行处插入新的一行
+          O为在当前光标所在行的上一行处插入新的一行
+
+s  S    进入插入模式
+          s先删除光标所在处的字符，然后再进入插入模式
+          S先删除光标所在的一整行，然后再进入插入模式
+
+r  R    进入替换模式
+          r只会替换光标所在处的那一个字符一次
+          R会一直替换光标所在的字符，直到按下<ESC>键为止
+
+C  C
+
+
+: / ? ! 进入命令行模式
+         : 开启命令行模式，以便输入命令
+         / 和 ? 开启命令行模式，以便查找和替换字符串（参见第5章）
+         ! 开启命令行模式，以便执行外部shell命令（参见第10章第2节）
+
+注：<ESC>  只要在任何情况下按<ESC>键，都会回到“一般模式”中。
+
+
+
+                                第4章  光标移动
+
+说明：在命令前加上一个数字，表示连续执行该命令的次数；且如果动作包括一个次数而
+操作符之前也有一个的话，则两者相乘，如：“2d3w”删除六个单词。以下各章相同。
+
+4.1  一般模式下的光标移动
+
+注：光标的移动一般都是一般模式下进行的，也就是说，要想移动光标的位置，一般要先
+切换到一般模式下，然后再按相应的键进行移动光标。当然，要想移动光标并非一定要先
+切换到一般模式下，如：在插入模式下，可以按上、下、左、右四个方向键进行移动光标
+的位置（四个方向键比较特殊，基本上在任何模式下都能移动光标的位置）。只不过，一
+般模式有比较强大、丰富的光标移动命令，可以这样认为——“一般模式”其中的一个大功能
+就是为了进行光标的移动（其余各功能请参见“第7章”）。
+
+h(LEFT)     光标向左移动一个字符
+j(DOWN)     光标向下移动一个字符
+k(UP)       光标向上移动一个字符
+l(RIGHT)    光标向右移动一个字符
+注：在这些按键前加上数字（如5k），表示进行多次移动
+
+w   将光标移动到右边一个单词的首字符上
+b   将光标移动到左边一个单词的首字符上
+e   将光标移动到右边一个单词的最后一个字符上
+ge  将光标移动到左边一个单词的最后一个字符上
+注：以上的w、b、e如果大写，将以空白字符为单词的分隔符。
+
+)   将光标移动到句尾；如果持续按)，则将光标移动到下一句的句尾
+(   将光标移动到句首；如果持续按(，则将光标移动到上一句的句首
+}   将光标移动到段落的最后一个字符后（即：将光标位置移动到紧跟着当前光标所在段落
+    的第一个空行的首字符上）
+{   将光标移动到段落的第一个字符前（即：将光标位置移动到紧邻着当前光标所在段落的
+    上一空行的首字符上）
+
+zt  将光标所在的行移动到屏幕的顶部（即使屏幕做相应的向上卷屏）
+zz  将光标所在的行移动到屏幕的中间（即使屏幕做相应的向上或下卷屏）
+zb  将光标所在的行移动到屏幕的底部（即使屏幕做相应的向下卷屏）
+
+Ctrl-f     将屏幕向下移动一页，相当于PgDn按键
+Ctrl-b     将屏幕向上移动一页，相当于PgUp按键
+Ctrl-d     将屏幕向下移动半页
+Ctrl-u     将屏幕向上移动半页
+
++          将光标移动到下一行的第一个非空格字符上
+-          将光标移动到上一行的第一个非空格字符上
+
+<space>    将光标向右移动一个字符
+<Enter>    将光标向下移动一行，并使光标位于该行的首字符上
+^或0       数字0。将光标移动到当前光标所在行的第一个非空格字符上
+<Home>     将光标移动到光标所在行的首字符（包括空格）上
+$或<End>   将光标移动到光标所在行的最后一个字符上
+H          将光标移动到本屏幕的最上方那一行的第一个字符处（Head）
+M          将光标移动到本屏幕的中央那一行的第一个字符处（Middle）
+L          将光标移动到本屏幕的最下方那一行的第一个字符处（Last）
+G          将光标移动到本文件的最后一行的首字符上
+nG或n      n为数字。将光标移动到本文件的第n行的首字符上
+gg         将光标移动到本文件的第一行的首字符上，相当于“1G”
+|          将光标移动到当前行的第一列上
+n|         n为数字。将光标移动到当前行的第n列上
+
+fx         向右查找并移动到指定的字符x上（f为find）
+Fx         向左查找并移动到指定的字符x上
+
+注：这两个命令可以通过“;”命令重复，“,”命令则用于反向重复。无论用哪个命令，光标
+永远都不会移出当前行，哪怕这两行是连续的一个句子。为了终止一个查找操作，可以按
+ESC键。
+
+%         将光标移动到相对应的括号位置上（包括小括号、中括号和大括号）
+n%        其中n为数字。将移动光标到本文档的百分之n位置处
+''        两个连续的单引号。将光标跳转到上一次跳转的地方；如果再次按''，光标将
+          重新跳转回来
+
+f[ile]
+Ctrl-G    显示当前光标所在位置的信息
+f[ile]!   同:file，但并不截断文件名
+Ctrl-L    清屏并重画屏幕。重画可能稍后发生，在处理完预读之后。
+
+
+4.2  在插入模式（包括一般模式和可视模式，但不包括命令行模式）下可使用的特殊键
+
+<C-Home>    将光标移动到本文件的首字符上
+<C-End>     将光标移动到本文件的最后一个字符上
+<PageUp>    将屏幕上卷一屏
+<PageDown>  将屏幕下卷一屏
+<Home>      将光标移动到当前光标所在行的首字符上
+<End>       将光标移动到当前光标所在行的最后一个字符上
+<S-Left>    将光标左移一个单词，并将光标位于该单词的首字符上
+<C-Left>    将光标左移一个单词，并将光标位于该单词的首字符上
+<S-Right>   将光标右移一个单词，并将光标位于该单词的首字符上
+<C-Right>   将光标右移一个单词，并将光标位于该单词的首字符上
+
+
+
+                            第5章  文本编辑
+
+5.1  插入模式
+插入模式是为了进行编辑文本文件用的，因此，也可以称插入模式为“编辑模式”，只不过，
+Vim官方（手册）上称其为“插入模式（insert）”，所以在本全文中都称之为“插入模式”。
+
+在插入模式下，除了特殊键和功能键之外，按下的任何键都会把其代表的相应字符插入到文
+本当中，就像我们用其它的编辑器向文本文件中输入文字一样。
+
+
+5.2  插入特殊字符
+Ctrl-V x  x是一个特殊字符按键，比如：<Esc>。插入特殊字符到当前光标位置
+
+注：在MS-Windows环境下，Ctrl-V用来粘贴文本，所以可以用Ctrl-Q来代替Ctrl-V；
+    在UNIX环境下，Ctrl-Q在某些终端上不起作用，因其另有特殊意义。
+
+Ctrl-V n  n是一个数字（十进制、八进制、十六进制、Unicode字符编码）。插入数字n所
+代表的字符
+
+注：n默认为十进制；八进制以0开头，十六进制以x或X开头，Unicode字符编码以u或U开头
+   （u后面跟4个十六进制数字，而U后面跟8个十六进制数字）。
+
+
+5.3  插入二合字母
+有些字符在键盘上没有对应的按键，比如：商标。所以，想要输入这些键盘找不到的字符，
+就要使用Vim所提供的“二合字母”。
+
+Ctrl-K n   n为二合字符在Vim中的标号或缩写。可以通过":dig[raphs]"命令来查看所有
+           Vim能支持的二合字符标号
+
+注：二合字母表取决于Vim假定你所使用的字符集。在MS-DOS系统上采用的二合字母集不同
+    于MS-Windows系统上的。务必用“:dig[raphs]”命令来查找当前可供利用的二合字符。
+
+
+5.4  命令行编辑
+5.4.1  命令行上移动光标时最常用的键
+<Left>                   将光标左移一个字符
+<Right>                  将光标右移一个字符
+<S-Left>或<C-Left>       将光标左移一个单词
+<S-Right>或<C-Right>     将光标右移一个单词
+Ctrl-B或<Home>           将光标移动到命令行行首
+Ctrl-E或<End>            将光标移动到命令行行尾
+
+5.4.2  删除
+<BS>              删除光标左边的一个字符
+<Del>             删除光标所在处的字符
+Ctrl-W            删除光标左边的整个单词
+Ctrl-U            删除命令行上所有的字符
+Ctrl-C或<ESC>     取消命令行上的命令
+
+5.4.3  命令行补全
+<Tab>            补全命令行的命令和文件名
+Ctrl-P           与<Tab>相反的方向循环补全命令行
+注：Vim的命令行补全取决于关键词前面的命令
+
+Ctrl-D           总览命令行上所有的匹配
+Ctrl-L           补全为最长无歧义字符串
+
+5.4.4  历史命令
+Ctrl-P或<Up>     前一个历史命令
+Ctrl-N或<Down>   后一个历史命令
+
+5.4.5  命令行窗口
+q:              在屏幕底部打开一个命令行窗口（历史命令列表）
+<Enter>         关闭命令行窗口
+
+注：所有冒号后的命令（即命令行命令）都可以被缩写。
+
+
+
+                            第6章  查找与替换
+
+本章讲的“查找”与“替换”都是属于命令行模式的；其中，“查找”要求以斜杠（/）或问号
+（?）开头，“替换”要求以冒号（:）开头。
+
+6.1  查找
+/word        向下查找一个名称为word的字符串
+?word        向上查找一个名称为word的字符串
+n            n为英文按键。表示重复前一个查找的操作
+N            N为英文按键。与n相反，表示“反向”进行前一个查找
+
+/word\>      匹配以word结尾的单词
+/\<word      匹配以word开头的单词
+/\<word\>    完整地匹配单词word
+
+
+6.2  替换
+:n1,n2 s/word1/word2/g     n1和n2为数字。在第n1和n2行之间查找word1这个字符串，
+                           并将该字符串替换为word2
+:1,$ s/word1/word2/g       从第一行到最后一行查找word1字符串，并将其替换为word2
+:n1,n2 s/word1/word2/gc    在第n1与n2行之间查找word1字符串，并将其替换为word2，
+                           但在替换前显示提示字符给用户，以确认是否需要替换
+
+注：/是分隔符，可以替换成其它字符，如@或#等。
+
+
+
+                        第7章  删除、复制、粘贴以及撤消与重复
+
+本章讲的所有命令都是属于一般模式下的。一般模式除了光标移动的大功能，还有就是本章
+所要讲的几个功能。
+
+7.1  删除
+x  X    x删除当前光标所在处（或光标右边）的一个字符（相当于<DEL>按键）
+        X删除当前光标左边的一个字符（相当于<BS>）
+nx      n为数字。从当前光标所在处开始，连续向右删除n个字符
+dw      从当前光标位置删除到右边一个单词的开头
+db      从当前光标位置删除到左边一个单词的开头
+diw     删除当前光标上的整个单词（不包括单词后面的空白字符）
+daw     删除光标上的单词（包括单词后面的空白字符）
+
+dd      删除当前光标所在的那一整行上的所有字符
+ndd     n为数字。从当前光标所在行开始，向下删除n行
+d1G     删除从当前光标所在行到第一行之间的所有字符
+dG      删除从当前光标所在行到最后一行之间的所有字符
+D或d$   删除从当前光标所在处到该行的最后一个字符之间的所有字符
+d0      删除从当前光标所在处到该行的第一个字符之间的所有字符
+
+dx      x是一个（移动）动作。删除从当前光标位置到经过（移动）动作x后所处在的位置
+        之间的所有的字符。比如：d$删除从光标所在处到该行的最后一个字符之间的所有
+        字符。
+
+
+7.2  复制
+yy      复制光标所在行上的所有字符
+nyy     n为数字。从当前光标所在行开始，向下复制n行
+y1G     复制光标所在行到第一行之间（包括第一行）的所有字符
+yG      复制光标所在行到最后一行之间（包括最后一行）的所有字符
+y0      复制光标所在处的字符到该行行首之间的所有字符
+y$      复制光标所在处的字符到该行行尾之间的所有字符
+
+
+7.3  粘贴
+p  P    p为将已复制（或删除）的字符在当前光标所在处的下一行进行粘贴
+        P则为将已复制（或删除）的字符在当前光标所在处的上一行进行粘贴
+
+
+7.4  撤消与重复
+J       将当前光标所在行与下一行结合成同一行（即：删除光标所在行上的换行符）
+c       重复删除多个数据，如向下删除10行：10cj
+.       小数点。重复前一个操作
+u       撤消前一个操作
+Ctrl-r  重做前一个操作，会撤消u操作
+U       一次性撤消对一整行上的全部操作。第二次使用该命令则会撤消前一个“U”操作
+
+
+
+                            第8章  块（可视模式）
+
+v       字符选择，会将光标经过的地方反白选择
+V       行选择，会将光标经过的行反白选择
+Ctrl-v  块选择，用长方形的方式选择字符（两个光标点为长方形的对角线）
+y       将反白的地方复制起来
+d       将反白的地方删除
+ggVG    选中整个缓冲区的所有内容
+
+
+
+                            第9章  多文件（缓冲区）编辑
+
+本章讲的大部分命令基本上都是命令行模式下的，注意前面有一个冒号（:）。
+
+Vim下每一个打开的文件对应一个缓冲区（Buffer）。
+
+多文件编辑会有两种情形：一种是进入Vim前所用的参数，就是多个文件，这个情形称为
+argument list；另一种情形是进入Vim后另外再打开的其它文件，这个情形称为buffer
+list。不过，它们都可以统称为Buffer。
+
+9.1  多文件编辑
+9.1.1 打开新文件
+:e filename   打开文件filename进行编辑
+:e!          将文件还原到未保存时的最原始状态
+其中，e为edit的缩写。
+
+
+9.1.2 跳转到其它文件
+:n    编辑下一个文件。如果已经作了修改而 vim 不能放弃当前的缓冲区，则该命令失败
+:n!   编辑下一个文件。忽略任何对当前缓冲区的已有修改
+:Mn   M是个数字。编辑下M个文件
+:N    编辑上一个文件。如果已经作了修改而 vim 不能放弃当前的缓冲区，则该命令失败
+:N!   编辑下一个文件。忽略任何对当前缓冲区的已有修改
+:MN   M是个数字。编辑上M个文件
+:prev[ious]    和“:Next”相同
+
+注：
+（1）n、N和prev只能作用在argument list上的文件，对buffer list上的文件不起作用。
+（2）如果当前文件没有保存而又要编辑另外一个文件，则Vim会提示没有保存当前文件而
+     不允许编辑另外一个文件。解决办法：一是先保存当前的文件，然后再编辑另外一个
+     文件；二是在n或N后添加一个叹号!，以放弃当前文件的修改，然后再编辑另外一个
+     文件。
+（3）n和N为next的缩写；prev为previous的缩写。
+
+:rew  返回到首个文件
+:e#   编辑前一个文件。这个命令在argument list和buffer list文件间皆可使用。
+
+
+9.2  缓冲区
+:buffers
+:files
+:ls                      列出当前Vim进程中的所有已打开的缓冲区的文件名
+:bd[elete][!] {bufname}  卸载（即删除）指定名字或编号的缓冲区
+Ctrl-^                   轮换编辑文件。如果“autowrite” 或“autowriteall”选项打开
+                         并且缓冲区被修改，则写入文件
+
+:b[uffer] n     n为缓冲区编号或文件名。编辑指定编号或文件名的缓冲区。
+:bn             n为字母N。切换到下一个缓冲区
+:bp             p为字母P。切换到上一个缓冲区
+:bl             l为字母L。切换到最后一个缓冲区
+:bf             f为字母F。切换到第一个缓冲区
+
+注：缓冲区标识
+对于缓冲区显示，每行代表一个缓冲区（即一个已打开的文件），每行有4列，依次表示：
+缓冲区编号、缓冲区标识、相对于当前目录的“相对文件路径名”、该缓冲区中的当前光标
+所在的行号。
+
+对于缓冲区编号，可以通过“:buffer n”（n为该编号）命令来切换到该缓冲区。对于缓冲区
+标识，“%a”表示当前文件；标识符中的第一个字符是“#”的表示前一个文件，可以通过命令
+“:e#”来切换到该缓冲区；“-”表示该Buffer并未载入；“+”表示该缓冲区已经修改过了。
+
+
+
+                            第10章  多窗口功能
+
+10.1  分割窗口
+:sp[lite] [filename]    打开一个新窗口。如果有filename，表示在新窗口中打开该文
+                        件；否则，表示两个窗口为同一个文件内容（同步显示）
+Ctrl-W  n
+:new                    打开一个新窗口和空的缓冲区（水平切割而成）
+:vsp[lite]  [filename]  同sp和vsplit，只不过是垂直切割窗口
+Ctrl-W  v
+:vnew                   同new，只不过是垂直切割而成
+
+
+10.2  移动窗口
+Ctrl-w  j/<DOWN>    将当前活动光标移动到下方的窗口中
+Ctrl-w  k/<UP>      将当前活动光标移动到上方的窗口中
+Ctrl-w  h/<LEFT>    将当前活动光标移动到左方的窗口中
+Ctrl-w  l/<RIGHT>   将当前活动光标移动到右方的窗口中
+Ctrl-w  t           将当前活动光标移动到顶部的窗口中
+Ctrl-w  b           将当前活动光标移动到底部的窗口中
+注：如果是J/K/H/L等大写字母，则分别将当前活动光标移动到最下/上/左/右边的窗口中。
+
+
+10.3 改变窗口大小
+Ctrl-W =     使得所有窗口（几乎）等宽、等高
+Ctrl-w  +/-  增加/ 减小当前窗口的高度
+Ctrl-W </>   使得当前窗口宽度减少/ 增加N（默认值为1）
+
+
+10.4  关闭窗口
+:close   关闭当前窗口
+:only    关闭除当前窗口外的所有窗口
+:wall    保存所有窗口中的文件（实际上，只会保存修改过的文件）
+:qall    关闭所有窗口；如果任何一个窗口没有存盘，则Vim都不会退出，且光标会自动
+         跳到那个窗口。
+:qall!   放弃所有修改并关闭所有窗口
+:wqall   保存并关闭所有窗口
+
+注：vimdiff one.c two.c   查看两个文件的不同之处
+
+
+
+                        第11章  保存、离开以及执行shell命令
+
+本章讲的命令基本上都是命令行模式下的，注意其前面的冒号（:）。
+
+11.1  保存、离开
+:w     将编辑的数据写入到硬盘文件中
+:w!    若文件属性为“只读”时，强制写入该文件。但是，到底能不能写入，还是跟对该文
+       件的权限有关
+:q     离开Vim
+:q!    不保存修改过的文件，强制离开Vim
+:wq    保存后离开
+:wq!   强制保存后离开
+ZZ     若文件没有更改过，则不保存离开；若文件已经被更改过，则保存后离开。
+ZQ     退出，不检查是否发生了修改（等同于“:q!”）。
+
+:w[filename]          将编辑的数据保存为另一个文件filename中（类似于“另存为”）；
+                      如果没有指定filename，则保存到当前文件中
+:sav[eas] [filename]  同“:w[filename]”。
+:f[ile][!] {name}     将当前文件名设置为name。可选的!号避免截断信息。
+:r{filename}          在当前正在编辑的文件中，读入另一个文件的数据，即将
+                      “filename”这个文件中的内容追加到当前光标所在行的后面
+:n r {filename}       从第n行插入名为“filename”的文件的内容。
+:n1,n2 w [filename]   将n1到n2行之间的内容保存到filename文件
+:n1,n2 co n3          将n1到n2行之间的内容拷贝到第n3行下
+:n1,n2 m n3           将n1到n2行之间的内容剪切到第n3行下
+:n1,n2 d              将n1到n2行之间的内容删除
+
+:x[it][!]     如果当前文件被修改过但还没有保存，则保存并退出；如果没有修改，则
+              直接退出
+:exi[t][!]    同“:xit”。
+:up[date][!]  与“:write”类似，但只有在缓冲区已修改的时候才写入保存。
+
+注：w为write的缩写，q为quit的缩写，r为read的缩写，!为“强制”。
+
+
+11.2  执行Shell命令
+:!command         暂时离开Vim到shell终端模式下，执行命令command并显示其结果，
+                  然后返回到先前的Vim状态
+:n1,n2 w!command  将文件中n1到n2行之间的内容作为命令command的输入，并执行该令；
+                  若不指定n1和n2，则表示将整个文件内容作为command的输入
+:r!command        执行命令command并将其结果放到当前行
+:shell            暂时离开Vim，并启动一个新的Shell会话。该shell就相当于Vim的一个
+                  子进程，当退出该shell时，会返回到先前的Vim所处的状态
+
+
+11.3 暂停
+Ctrl-Z           暂停Vim。适用于普通模式和可视模式，在插入模式和命令行模式里，
+                 作为普通的字符插入。
+:sus[pend][!]
+:st[op][!]       暂停Vim。如果没有给出“!”并且置位“autowrite”，那么每个修改过且
+                 有文件名的缓冲区都被写回。如果给出“!”或“autowrite”没有置位，修
+                 改过的缓冲区不会写回。
+
+
+
+                                第12章  排版
+
+gq                       对选定的文字、段落进行重新排版
+:{range}center [width]   居中对齐文本。其中，{range}即是那些通常命令所能指定的
+                         范围；[width]是一个可选项，用来确定要居中的行的宽度，
+                         如果没有指定[width]，则默认使用'textwidth'的值。（如果
+                         'textwidth'是0，则默认为80）。
+:{range}right [width]    右对齐文本
+:{range}left  [width]    左对齐文本
+
+
+
+                                第13章  折叠
+
+如果想启用折叠，可以设置foldmethod选项（简写为fdm）。foldmethod选项是设置默认
+折叠方式，语法：set foldmethod=syntax。
+
+13.1 Vim中的折叠方式有6种：
+manual      手工定义折叠
+indent      根据缩进程度进行折叠
+expr        根据表达式来进行折叠
+syntax      根据语法（高亮）来进行折叠
+diff        对没有更改的文本进行折叠
+marker      对文中的标志进行折叠
+
+注：每种折叠方式都不兼容。
+
+
+13.2 折叠命令：
+注：所有折叠命令一律以z（小写）字母开头。
+zn     禁用折叠功能
+zN     恢复折叠功能
+zi     打开/关闭折叠（切换于zn和zN两者之间）
+zv     查看此行
+zm     关闭更多折叠
+zM     关闭所有折叠
+zr     打开更多折叠
+zR     打开所有折叠
+zc     折叠当前行
+zo     打开当前光标所处的折叠
+zd     删除折叠
+zD     删除所有折叠
+zfap   创建一个折叠，其中zf是创建折叠操作，而ap是一个文本对象
+
+关于更多的折叠，可参见Vim官方手册文件user_28.txt。
+
+
+
+                            第14章  语法高亮
+
+待写。可参见Vim官方手册文件syntax.txt、usr_06.txt和user_44.txt。
+
+
+
+                            第15章  文件类型
+
+待写。可参见Vim官方手册文件filetype.txt和user_43.txt。
+
+
+
+                            第16章  编辑程序
+
+C缩进：先选择要格式的代码块（第8章），然后按=键即可。
+可参见Vim官方手册文件user_30.txt和indent.txt。
+
+
+
+                            第17章  配置脚本编写
+
+Vim启动流程：
+Vim配置文件的选择与导入：
+Vim配置脚本的编写语法：
+
+待写。可参见Vim官方手册文件eval.txt和user_41.txt。
+
+
+# 在Windows系统中，把反斜杠自动替换成斜杠
+set shellslash
+
+# 要在 Vim 脚本里检查是不是使用 GUI，你可以这么使用:
+if has("gui_running")
+    echo "是的，我们有 GUI"
+else
+    echo "无聊的老终端"
+endif
+
+# 如果在多个系统上使用同一个vimrc文件，你可以这样设置不同类型的 GUI 专用的选项:
+if has("gui_running")
+    if has("gui_gtk2")
+        :set guifont=Luxi\ Mono\ 12
+    elseif has("x11")
+        " Also for GTK 1
+        :set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
+    elseif has("gui_win32")
+        :set guifont=Luxi_Mono:h12:cANSI
+    endif
+endif
+
+# MS Mincho 是一个推荐的日文字体。相关信息见: http://www.lexikan.com/mincho.htm
+
+
+
+                                第18章  杂项
+
+18.1  单词统计
+18.1.1  统计整个文件的字数
+    g  Ctrl-G
+
+18.1.2  统计一部分文字的字数
+    先选择一部分字符（通过可视模式“Visual”，第7节），然后再按下组合键“g  Ctrl-G”
+    （注：没有双引号）
+
+18.1.3  显示当前光标所在位置的信息
+        Ctrl-G
+        file[!]
+
+
+18.2  转换UNIX与DOS格式
+18.2.1  转换DOS到UNIX
+    当编辑MS-DOS格式文件时，可以转换为UNIX格式
+    :set fileformat=unix
+    :write
+
+18.2.2  转换UNIX到DOS
+    当编辑UNIX格式文件时，可以转换为MS-DOS格式
+    :set fileformat=dos
+    :write
+
+注：本节的UNIX和DOS格式指的是换行符问题，UNIX的换行符格式是LF（换页符），DOS的
+换行符格式是CR LF（回车符加换行符），MAC的换行符格式是CR（回车符）。若是把换行
+符转换成Mac格式，则要把fileformat设置成mac。
+
+
+18.3  加密
+    想要编辑一个需要加密的新文件，可以使用“-x”参数来启动Vim。
+    如：vim -x filename，Vim会提示你输入一个密码，该密码用于为文件加密和解密。
+
+    要给一个文件撤除加密，设定“key”选项为空字符串：    :set key=
+    但你下一次把这个文件存盘时，存盘的文件就是未经加密的。如果直接通过设定“key”
+    选项来启用加密是个坏主意，因为密码会被清楚地显示在屏幕上。为了避免这个问题，
+    可以使用“:X”命令，它会像“-x”参数一样。
+
+
+18.4  单词补全
+    在插入模式下时，可以用Ctrl-P来正向搜索匹配进行补全单词，Ctrl-N以向反的方向
+    进行搜索匹配来补全单词。
+    全能补全热键：Ctrl-X Ctrl-O
+
+
+18.5  编码乱码问题
+18.5.1  Vim编码原理
+    在Vim中，有四个与编码有关的选项，它们是：fileencodings、fileencoding、
+    encoding 和termencoding。在使用中，如果任何一个选项出现错误，都可能会导致
+    乱码。
+
+    encoding是Vim内部使用的字符编码方式。当我们设置了 encoding之后，Vim内部所有
+    的buffer、寄存器、脚本中的字符串等，全都使用这个编码。Vim 在工作的时候，如果
+    文件的编码方式与它的内部编码不一致，它会先把文件的编码转换成内部编码。如果
+    编辑文件时所使用的编码中含有无法转换为内部编码的字符，在这些字符就会丢失。
+    因此，在选择 Vim 的内部编码的时候，一定要使用一种    表现能力足够强的编码。
+    由于encoding选项涉及到Vim中所有字符的内部表示，因此只能在Vim启动的时候设置
+    一次；在Vim使用过程中修改encoding会造成很多问题。如果没有特别的理由，应始终
+    将encoding设置为utf-8。关于encoding所能支持的值，请参见“附录四  Vim所支持的
+    encoding值”。
+
+    termencoding是Vim用于屏幕显示的编码。在屏幕上显示的时候，Vim会把内部编码转换
+    为屏幕编码，再进行输出。如果内部编码中含有无法转换为屏幕编码的字符，该字符则
+    会显示成问号，但不会影响对它的编辑操作。如果termencoding没有设置，则直接使用
+    encoding而不会进行转换。对于图形界面下的GVim，它的显示不依赖TERM，因此
+    termencoding对于它没有意义。在GTK2下的GVim中，termencoding永远是utf-8，并且
+    不能修改；而Windows下的 GVim 则忽略termencoding的存在。
+
+    fileencoding是来表示文件的编码方式。当Vim从磁盘上读取文件的时候，会对文件的
+    编码进行探测。如果文件的编码方式和Vim的内部编码方式不同，Vim 就会对编码进行
+    转换。转换完毕后，Vim会将fileencoding选项设置为文件的编码。当Vim存盘的时候，
+    如果encoding和fileencoding不一样，Vim同样也会进行编码转换。因此，通过打开文
+    件后设置fileencoding，我们可以将文件由一种编码转换为另一种编码，注意，前提是
+    能够先解码，即由fileencoding到encoding转换时不会乱码。但是，由前面的介绍我们
+    知道，fileencoding是在打开文件的时候由Vim进行探测后自动设置的。因此，如果出
+    现乱码，我们无法在打开文件后通过重新设置fileencoding来纠正乱码。
+
+    fileencodings是用来进行编码自动识别的。编码的自动识别是通过设置fileencodings
+    实现的。fileencodings是一个用逗号分隔的列表，其中的每一项是一种编码的名称。
+    当我们打开文件的时候，Vim会按顺序使用fileencodings中的编码进行尝试解码。如果
+    成功的话，就使用该编码方式进行解码，并将fileencoding设置为这个值；如果失败的
+    话，就继续尝试下一个编码。因此，我们在设置fileencodings的时候，一定要把要求
+    严格的且当文件不是这个编码的时候更容易出现解码失败的编码方式放在前面，把宽松
+    的编码方式放在后面。
+
+    如果编码被误判了，解码后的结果就无法被人类所识别，于是我们就说，这个文件乱码
+    了。此时，如果你知道这个文件的正确编码的话，可以把fileencodings改成只有这一
+    种编码，阻止任何fall-back发生，然后重新打开这个文件。
+
+18.5.2  文件乱码解决方案
+18.5.2.1  方法一：fileencodings编码顺序设置
+    以下是滇狐推荐的一个fileencodings编码设置顺序：
+    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+    其中，ucs-bom是一种非常严格的编码，不是该编码的文件几乎没有可能被误判为
+    ucs-bom，因此放在第一位。utf-8也相当严格，除了很短的文件外，现实生活中一般文
+    件是几乎不可能被误判的，因此放在第二位。cp936和gb18030这两种编码相对宽松，如
+    果放前面的话，会出现大量误判。cp936的编码空间比gb18030小，所以把cp936放在
+    gb18030前面。至于big5、euc-jp和euc-kr，它们的严格程度和cp936 差不多，把它们
+    放在后面，在编辑这些编码的文件的时候必然出现大量误判，但这是 Vim 内置编码探
+    测机制没有办法解决的事。由于中国用户很少有机会编辑这些编码的文件，因此我们还
+    是决定把cp936和gb18030放在前面以保证这些编码的识别。
+
+    latin1是一种极其宽松的编码，以至于我们不得不把它放在最后一位。不过可惜的是，
+    当你碰到一个真的latin1编码的文件时，绝大部分情况下，它没有机会fall-back到
+    latin1，往往在前面的编码中就被误判了。不过，正如前面所说的，中国用户没有太多
+    机会接触这样的文件。
+
+18.5.2.2  方法二：fencview.vim插件
+    由以上我们知道，通过Vim内置的编码识别机制，其识别率是很低的，尤其是对于简体
+    中文(GBK/GB18030)、繁体中文(Big5)、日文(euc-jp)和韩文(euc-kr)之间的识别。而
+    对于普通用户而言，肉眼看出一个文件的编码方式也是很不现实的事情。
+
+    为此，水木社区的mbbill开发的fencview插件。该插件使用词频统计的方式识别编码，
+    正确率非常高。
+    其下载地址为：http://www.vim.org/scripts/script.php?script_id=1708。
+
+    附：在UNIX（包括类UNIX，如Linux）下有一个软件iconv，该软件专门用来转换不同的
+    编码，可以把文件从一种编码转换到另一种编码。如果Vim实在无法识别编码，可以先
+    用iconv将文件转换成Vim识别的编辑。注意，这只是一个权宜之计。
+
+
+18.6  目录切换
+    在Vim中，可以使用“:cd”和“:lcd”命令切换到其他的目录。
+    :cd[!]           在非Unix系统上，显示当前目录名；在Unix系统上，改变当前目录
+                     到主目录
+    :cd[!] {path}    切换当前目录到{path}。如果｛path｝是相对路径，则在“cdpath”
+                     列出的目录中搜索
+    :cd  %:h         切换到当前文件的目录
+    :cd[!] -         切换到上一个当前目录（在上个“:cd {path}”命令之前）
+    :lc[d][!] {path} 和“:cd”命令相似。但只设置当前窗口的当前目录，别的窗口的当前
+                     目录保持不变
+    :lch[dir][!]     和“:lcd”相同
+    :pw[d]           显示当前目录名（在所有的系统上）
+
+    注：在Windows下，“:cd”命令能识别驱动器符号，并且可以改变当前的驱动器；命令
+    “:cd c:”使驱动器C成为当前的驱动器；命令“:cd d:\foo”切换当前目录到“D盘的foo目
+    录下”。另外，Vim也能识别UNC路径，如：“:cd \\server\share\dir”。
+
+
+18.7  编辑二进制文件
+    在启动Vim时，给出“-b”选项，则打开二进制模式进行文件读写操作。
+
+    编辑二进制文件时的注意事项：
+    （1）在编辑可执行文件时，不要修改字符数。只用“R”或“r”命令来修改文本，不要用
+         “x”或退格键删除字符。
+    （2）设置“textwidth”选项为0。不然，行会被意外的截为两段。
+    （3）确保在读入文件前，置位“binary”选项。不然，<CR><NL>和<NL>都被认为行尾，
+         从而在写回时，<NL>会被<CR><NL>取代。
+    （4）<Nul>字符在屏幕上显示为“^@”。可用“Ctrl-V Ctrl-@”或“Ctrl-V 000”输入它。
+    （5）插入<NL>字符会截断一行。在将缓冲区写入到文件时，<NL>会作为<EOL>被写入。
+    （6）如果文件尾没有<EOL>字符，Vim通常会自己加上。置位“binary”选项会禁止这一
+         行为。
+
+
+18.8  缩进
+    >      增加一行中的缩进量（默认值是一个缩进单位，shiftwidth控制缩进单位，默
+           认为8）
+    >>     为当前行增加缩进
+    ==     根据上一行的缩进量自动缩进当前行（即将当前行与上一行自动对齐）
+    gg=G   格式化整个缓冲区
+
+    在缩进时，如果在其命令前有一个数字N，则表示从当前行开始，向下共N行一起缩进。
+
+    注：C及其它编程语言的缩进请参见第16章。
+
+
+18.9  比较模式（diff）
+    待写。可参见Vim官方手册文件diff.txt。
+
+
+18.10  会话（session）
+    待写。可参见Vim官方手册文件user_20.txt中的第20.4章节。
+
+
+18.11  匹配模式
+    待写。可参见Vim官方手册文件usr_27.txt。
+
+
+18.12  十六进制模式
+    在Vim下，可以使用十六进制来编辑一个已打开的文件。命令“%!xxd”从正常状态进入
+    十六进制状态；而“%!xxd -r”则从十六进制状态返回正常状态。
+
+
+18.13  SPACE和TAB的转换
+    tabstop       一个TAB键显示多少个空格，默认是8
+    shiftwidth    每一级缩进是多少个SPACE
+    softtabstop   在编辑（如按退格键或TAB键）时，一个TAB键是多少个空格
+    smarttab      根据文件中其他地方的缩进空格个数来确定一个TAB键是多少个空格
+    noexpandtab/expandtab       （不）将TAB键扩展成SPACE
+    :[range]retab [new_tabstop]  应用新的tabstop的值，替换所有的TAB
+
+    保留TAB：
+        让tabstop保持默认值，将softtabstop设为4,并置noexpandtab。
+        这样文件中本来有TAB的话会保留，新增的TAB缩进处也会使用TAB。
+    全部用空格：
+        将tabstop和shiftwidth设置成相同的值，并设置expandtab。
+
+    将TAB键转换成SPACE
+        在一般模式（NORMAL）下，执行以下命令即可：
+        :retab
+        此命令会将整个缓冲区中的TAB转换成tabstop个SPACE；如果该命令后有一个
+        数字N，则将整个缓冲区中的TAB字符转换成N个SPACE，如：
+        :retab 8
+        注：此命令也会将一个字符串变量中的TAB转换成SAPCE。
+
+
+18.14  批量注释
+    方法一：块选择模式
+        （1）批量注释：
+             Ctrl+V进入块选择模式，然后移动光标选中要注释的行，再按大写字母I进入
+             行首插入模式，并输入注释字符（如python中的#或C/C++中的//），输入完
+             毕后再按ESC键，此时Vim会自动将选中的所有行的“首部”（此“首部”并非是
+             整行的首字符，所以当按Ctrl+V前最好先将光标移动行的首字符上）添加注
+             释。
+        （2）取消注释：
+             Ctrl+V进入块选择模式，选中要删除的行首的注释符号（注意：如果是//，
+             要选中两个），然后再按d键即可。
+
+    方法二：替换命令
+        （1）批量注释：
+             使用下面命令在指定的行首添加注释：
+             :起始行号,结束行号s@^@注释符号@g
+
+             解释：把从“起始行号”到“结束行号”之间的所有行的行首字符替换成“注释
+             符号”。
+
+        （2）取消注释：
+             :起始行号,结束行号s@^注释符号@@g
+
+             解释：把从“起始行号”到“结束行号”之间的所有行的以“注释字符”开始的字
+             符替换成空（相当于删除这些字符）。
+
+        注：其中的@字符可以换成其他任何字符，但不能是注释符号中的字符（如python
+        中的#，或C/C++中的/，VIM脚本或Lisp中的"）。因此，这里建议使用@（很少有
+        编程语言使用@符号作注释符号）。
+
+
+
+                            附录一  常用环境参数设置
+
+一、选项设置方法
+:se[t]              显示与系统默认值不同的设置参数
+:set all            显示目前除了终端设置以外的所有选项及值
+:set {option}?      显示选项{option}的值
+:set {option}       切换（布尔）选项：置位、打开；
+                    数值选项：显示其值
+                    字符串选项：显示其值
+:set no{option}     切换选项：复位、关闭
+:set {option}!
+:set inv{option}    切换选项：反转其值 （Vi无此功能）
+:set {option}&      复位选项为其缺省值。可能和“compatible”的现值有关
+:set {option}&vi    复位选项为Vi的缺省值。（Vi无此功能）
+:set {option}&vim   复位选项为Vim的缺省值。（Vi无此功能）
+:set all&           设置所有除了终端设置的选项为其缺省值。“term”、“lines”、
+                    “columns”的值不会改变。（Vi无此功能）
+
+:set {option}={value}
+:set {option}:{value}   设置字符串或数值选项的值为{value}
+                        注：数值选项的值可用十进制、十六进制（0x开头）或八进制
+                        （0开头）。{option}和“=”之间可以有空白，但会被忽略；而
+                        “=”和{value}之间不能有空白。
+:set {option}+={value}  把{value}加到数值选项里，或者附加到字符串选项之后。
+                        注：如果选项是逗号分隔的列表，除非原来的值为空，则会加上
+                        一个逗号；如果选项是标志位的列表，删除多余的标志位；如果
+                        加入已经存在的标志位，则选项值不变。
+:set {option}^={value}  把{value}乘到数值选项里，或者附加到字符串选项之前。如果
+                        选项是逗号分隔的列表，除非原来的值为空，会加上一个逗号。
+:set {option}-={value}  如果该值原来存在的话，把{value}从数值选项里减去，或者从
+                        字符串选项里删除。如果不存在，不会有错误或者警告。如果选
+                        项是逗号分隔的列表，除非新值为空，则删除一个逗号。如果选
+                        项是标志位列表，{value}必须和选项里出现的顺序完全相同，
+                        一个一个地分别删除标志位可以解决这个问题。
+
+:setf[iletype] {filetype}   把“filetype”选项设为{filetype}。但如果已经在（嵌套）
+                            自动命令序列中设置过，就不再进行。
+:bro[wse] se[t]
+:opt[ions]                  打开窗口，阅读和设置所有的选项。选项以功能分组。
+
+注：
+（1）“:set”可以设置多个{option}选项参数，其间用空白隔开。选项从左到右依次设置，
+     如果其中有一个参数设置有错，则给出错误信息，而且其后（即其右面）的参数也不
+     再设置了。
+（2）在字符串选项值中，如果要包含空白，一定要用反斜杠前导。若要包含单个反斜杠，
+     一定要输入两个反斜杠，换而言之，选项值里的反斜杠数目会减半（往下取整）。
+（3）单竖线（|）可把“:set”命令和下一个命令隔开。要在选项值中包含|，用“\|”代替。
+（4）双引号（"）引发注释，即从双引号后到该行的结束，之间的所有字符都会成为注释。
+     要想在选项值中包含双引号（"），用“\"”来代替。
+（5）若干字符串选项扩展环境变量。如果某环境变量存在，“$”后跟该环境变量的名字被
+     替换为它的值；如果不存在，“$”和该名字不会被修改。任何非标识符的字符（即，
+     不是字母、数字或下划线）都可以跟在环境变量名字的后面，该字符和其后的内容附
+     加于环境变量的值之后。
+
+
+二、常用选项
+本部分只是常用到的一些选项，如果想查看更多、更详细的选项，请参见Vim的官方手册。
+
+本部分整理起来比较乱，所以不按常规的方式（表格或类似于表格等）进行整理，而是进行
+散列排版，即：每行一个选项且分为六个字段，分别为选项名、选项的缩写、选项的类型、
+选项的默认值、选项值的范围、选项的含义，每个字段之间用空格分隔，如果某个字段在本
+章中没有说明，则标记为“无”。如果您感觉本章节太乱而无法阅读，请参见Vim官方手册中
+的options.txt文件。
+
+选项           缩写    类型      默认值              范围                       含义
+autoindent     ai    布尔型      关闭            局部于缓冲区                  自动缩进
+
+background     bg    字符串   dark或light           全局        背景颜色。设为“dark”时，Vim试图使用深色背景
+                                                                上看起来舒服的颜色；如果设为“light”，Vim会
+                                                                试图使用在浅色背景上看起来舒服的颜色。其它
+                                                                的值都是非法的。
+
+backup         bk    布尔型      关闭               全局        覆盖文件前创建一个备份并保留
+
+binary         bin   布尔型      关闭            局部于缓冲区   以二进制模式编辑文件。本选项应该在编辑二进
+                                                                制文件之前设置
+
+cindent        cin   布尔型      关闭            局部于缓冲区   打开自动C程序缩进
+
+columns        co    数值型   80或终端宽度          全局        屏幕的列数
+
+colorcolumn    cc    字符串       ""             局部于窗口     在行末加入一列颜色屏幕列，该列会用ColorColumn
+                                                                （hl-ColorColumn）高亮。该值是一个逗号分隔的列
+                                                                表，屏幕列可以是绝对值，也可以是"+"或"-"开头的
+                                                                数值，此时会从"textwidth"中加减该值；但"textwidth"
+                                                                为零时不使用带"+"或"-"的项目；最多可高亮256列，
+                                                                即该颜色屏幕列的列值最大是256。可用于对齐文本。
+                                                                该特性会使屏幕刷新变慢。
+
+compatible     cp    布尔型   打开，但如果找        全局        开启Vi兼容方式
+                             到vimrc或gvimrc
+                             文件则为关闭
+
+encoding       enc   字符串   latin1或$LANG的值     全局        Vim内部使用的字符编码
+
+fileencoding   fenc  字符串       ""            局部于缓冲区    此缓冲区所在文件的字符编码
+
+fileencodings  fencs 字符串     "ucs-bom"           全局        字符编码列表，开始编辑文件已存在的文件时，参考此项
+
+fileformat     ff    字符串   与平台有关（dos、
+                             unix、mac）        局部于缓冲区    换行符的格式
+
+fileformats    ffs   字符串   与平台有关            全局        换行符的格式列表
+
+filetype       ft    字符串       ""            局部于缓冲区    激活FileType自动命令事件。通常，在检测到文件类型
+                                                                时设置此选项。要打开这一功能，使用“:filetype on”
+                                                                命令。如：filetype plugin indent on 开启三种智能：
+                                                                自动识别文件类型、使用文件类型plugin脚本、缩进
+
+hlsearch       hls   布尔型       关闭              全局        将查找的字符串反白
+
+lines          无    数值型    24或者终端高度       全局        Vim窗口的行数
+
+matchtime      mat   数值型        5                全局        在显示匹配上等待的时间（n/10秒）
+
+number         nu    布尔型       关闭           局部于窗口     在每行前面显示行号
+
+numberwidth    nuw   数值型    Vim：4或Vi：8     局部于窗口     行号使用的最小列数
+
+readonly       ro    布尔型       关闭           局部于缓冲区   如果打开，除非使用“!”，否则不允许写入
+
+ruler          ru    布尔型       关闭              全局        标尺，显示光标位置的行号和列号（即状态栏信息）
+
+shiftwidth     sw    数值型        8            局部于缓冲区    （自动）缩进每一步使用的空白数目
+
+smartindent    si    布尔型       关闭           局部于缓冲区   开启新行时使用智能自动缩进
+
+showmode       smd   布尔型  Vim:打开或Vi:关闭      全局        显示诸如“--INSERT--”之类的信息
+
+showmatch      sm    布尔型       关闭              全局        显示括号匹配
+
+softtabstop    sts   数值型        0            局部于缓冲区    插入<TAB>或<BS>时，把<TAB>换算成设置的数目的空格
+
+spell          无     布尔型       关闭          局部于窗口     打开拼写检查功能
+
+syntax         syn   字符串        空           局部于缓冲区
+
+tabstop        ts    数值型        8            局部于缓冲区    文件里的<TAB>代表的空格数
+
+term           无    字符串       $TERM             全局        终端的名字
+
+terrnencoding  tenc  字符串        ""               全局        终端使用的编码
+
+textwidth      tw    数值型        0            局部于缓冲区    插入文本的最大宽度，更长的行会在此宽度处被截断。
+                                                                设为0表示关闭此功能
+
+warn           无    布尔型       打开              全局        在已修改的缓冲区上使用外壳命令会给出警告信息
+
+wrap           无    布尔型       打开           局部于窗口     如果一行的字符数超过屏幕的宽度则在下一行进行回绕
+                                                                显示；如果关闭，行不会回绕，长行只有一部分被显示，
+                                                                要想显示没有显示的部分，必须向右滚动水平滚动条
+
+write          无    布尔型       打开              全局        允许写入文件。如果不打开，则不允许写入文件；可
+                                                                以用来设置只读但允许在里面修改文本的模式
+
+writeany       wa    布尔型       关闭              全局        允许写入文件，而无需“!”覆盖缺省行为
+
+writebackup    wb    布尔型       无                全局        覆盖文件前建立备份，而文件成功写入后，除非
+                                                                "backup"选项也被打开，否则删除该备份
+
+
+
+                                附录二  获取帮助信息
+
+待写。
+
+
+
+                            附录三  Vim 所支持的encoding值
+
+1   latin1       8 位字符 (ISO 8859-1)
+1   iso-8859-n   ISO_8859 变体 (n = 2 to 15)
+1   koi8-r       俄语
+1   koi8-u       乌克兰语
+1   macroman     MacRoman (Macintosh 编码)
+1   8bit-{name}  任何 8 位编码 (Vim 特定名称)
+1   cp437        类似于 iso-8859-1
+1   cp737        类似于 iso-8859-7
+1   cp775        波罗的语
+1   cp850        类似于 iso-8859-4
+1   cp852        类似于 iso-8859-1
+1   cp855        类似于 iso-8859-2
+1   cp857        类似于 iso-8859-5
+1   cp860        类似于 iso-8859-9
+1   cp861        类似于 iso-8859-1
+1   cp862        类似于 iso-8859-1
+1   cp863        类似于 iso-8859-8
+1   cp865        类似于 iso-8859-1
+1   cp866        类似于 iso-8859-5
+1   cp869        类似于 iso-8859-7
+1   cp874        泰语
+1   cp1250       捷克语、波兰语等
+1   cp1251       西里尔字母
+1   cp1253       希腊语
+1   cp1254       土耳其语
+1   cp1255       希伯来语
+1   cp1256       阿拉伯语
+1   cp1257       波罗的语
+1   cp1258       越南语
+1   cp{number}   MS-Windows: 任何已安装的单字节代码页 (codepage)
+2   cp932        日语 (仅限 Windows)
+2   euc-jp       日语 (仅限 Unix)
+2   sjis         日语 (仅限 Unix)
+2   cp949        韩语 (Unix 和 Windows)
+2   euc-kr       韩语 (仅限 Unix)
+2   cp936        简体中文 (仅限 Windows)
+2   euc-cn       简体中文 (仅限 Unix)
+2   cp950        繁体中文 (Unix 上，big5 的别名)
+2   big5         繁体中文 (Windows 上，cp950 的别名)
+2   euc-tw       繁体中文 (仅限 Unix)
+2   2byte-{name} Unix: 任何双字节编码 (Vim 专用名称)
+2   cp{number}   MS-Windows: 任何已安装的双字节代码页 (codepage)
+u   utf-8        32 位 UTF-8 编码的 Unicode (ISO/IEC 10646-1)
+u   ucs-2        16 位 UCS-2 编码的 Unicode (ISO/IEC 10646-1)
+u   ucs-2le      类似于 ucs-2，little endian (高位字节在后)
+u   utf-16       ucs-2 并带有更多字符的双词扩展
+u   utf-16le     类似于 utf-16，little endian
+u   ucs-4        32 位 UCS-4 编码的 Unicode (ISO/IEC 10646-1)
+u   ucs-4le      类似于 ucs-4，little endian
+
+{name} 可以是任何系统支持的编码名。Vim 会调用 iconv() 在该编码名及当前 locale之
+间转换。对 MS-Windows 来说，"cp{number}" 意味着使用 {number} 代码页(codepage)。
+
+
+
+                            附录四  Vim配置文件推荐
+
+本附录直接摘录自滇狐的.vimrc配置文件（http://edyfox.codecarver.org/html/_vimrc.html）。
+注：笔者按着滇狐所介绍的其配置文件的用法，但有点错误，可能是笔者的插件上出现的问
+题，特此说明！
+
+"===========================================================================
+" General settings
+"===========================================================================
+set nocp
+
+" Tab related
+set ts=4
+set sw=4
+set smarttab
+set et
+set ambiwidth=double
+
+" Format related
+set tw=80
+set lbr
+set fo+=mB
+
+" Indent related
+set cin
+set ai
+set cino=:0g0t0(susj1
+
+" Editing related
+set backspace=indent,eol,start
+set whichwrap=b,s,<,>,[,]
+set mouse=a
+set selectmode=
+set mousemodel=popup
+set keymodel=
+set selection=inclusive
+
+" Misc
+set wildmenu
+set spell
+
+" Encoding related
+set encoding=utf-8
+set langmenu=zh_CN.UTF-8
+language message zh_CN.UTF-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set list
+set listchars=tab:»\ ,trail:\ ,extends:»,precedes:«
+highlight SpecialKey ctermbg=Red guibg=Red
+
+" File type related
+filetype plugin indent on
+
+" Persistent undo
+if v:version >= 703
+    set undodir=$HOME/.vimundodir
+    set colorcolumn=+1
+endif
+
+" Display related
+set ru
+set sm
+set hls
+if (has("gui_running"))
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions+=b
+    if $USER == "root"
+        colo peachpuff
+    else
+        colo torte
+    endif
+    set nowrap
+else
+    if $USER == "root"
+        colo shine
+    else
+        colo ron
+    endif
+    set wrap
+endif
+syntax on
+
+
+"===========================================================================
+" Shortcuts
+"===========================================================================
+" Move lines
+nmap <C-Down> :<C-u>move .+1<CR>
+nmap <C-Up> :<C-u>move .-2<CR>
+imap <C-Down> <C-o>:<C-u>move .+1<CR>
+imap <C-Up> <C-o>:<C-u>move .-2<CR>
+vmap <C-Down> :move '>+1<CR>gv
+vmap <C-Up> :move '<-2<CR>gv
+
+" Toggle line number
+nmap <C-F12> :set nu!<CR>
+imap <C-F12> <C-o>:set nu!<CR>
+
+" Toggle spell check
+" For VIM7 only
+nmap <C-F11> :setlocal spell!<CR>
+imap <C-F11> <C-o>:setlocal spell!<CR>
+
+
+"===========================================================================
+" Modes
+"===========================================================================
+function EnglishMode()
+    "set imactivatekey=
+    "set noimcmdline
+    "set iminsert=0
+    "set imsearch=0
+    setlocal spell
+endfunction
+command -nargs=0 EnglishMode call EnglishMode()
+
+function ChineseMode()
+    "set imactivatekey=C-space
+    "set noimcmdline
+    "set iminsert=2
+    "set imsearch=2
+    setlocal nospell
+endfunction
+command -nargs=0 ChineseMode call ChineseMode()
+
+function TextMode()
+    setlocal nocin
+    setlocal nosi
+    setlocal noai
+    setlocal tw=80
+endfunction
+command -nargs=0 TextMode call TextMode()
+
+function CodeMode()
+    setlocal cin
+    setlocal si
+    setlocal ai
+    setlocal tw=80
+endfunction
+command -nargs=0 CodeMode call CodeMode()
+
+function MailMode()
+    call TextMode()
+    setlocal tw=70
+endfunction
+command -nargs=0 MailMode setlocal ft=mail
+
+function BBSMode()
+    call MailMode()
+    call ChineseMode()
+    setlocal tw=76
+endfunction
+command -nargs=0 BBSMode setlocal ft=bbs
+
+function VikiMode()
+    call ChineseMode()
+    setlocal ft=viki
+endfunction
+command -nargs=0 VikiMode call VikiMode()
+
+
+"===========================================================================
+" Functions
+"===========================================================================
+function QuoteFix()
+    %s/^\(> \?\)*>/\=substitute(submatch(0), " ", "", "g")/ge
+    g/^\(> \?\)\+\s*$/d
+endfunction
+command -nargs=0 QuoteFix call QuoteFix()
+
+function TimeStamp()
+    let curposn= SaveWinPosn()
+    %s/\$Date: .*\$/\=strftime("$Date: %Y-%m-%d %H:%M:%S$")/ge
+    %s/Last Change: .*$/\=strftime("Last Change: %Y-%m-%d %H:%M:%S")/ge
+    %s/Last Modified: .*$/\=strftime("Last Modified: %Y-%m-%d %H:%M:%S")/ge
+
+    " Replace once and never update.
+    %s/Created: *$/\=strftime("Created: %Y-%m-%d %H:%M:%S")/ge
+    call RestoreWinPosn(curposn)
+endfunction
+command -nargs=0 TimeStamp call TimeStamp()
+
+function AutoTimeStamp()
+    augr tagdate
+    au!
+    au BufWritePre,FileWritePre * call TimeStamp()
+    augr END
+endfunction
+command -nargs=0 AutoTimeStamp call AutoTimeStamp()
+
+function NoAutoTimeStamp()
+    augr tagdate
+    au!
+    augr END
+endfunction
+command -nargs=0 NoAutoTimeStamp call NoAutoTimeStamp()
+command -nargs=1 Margin exec "match Error /.\\%>" . (<args> + 1) . "v/"
+command -nargs=0 NoMargin match none
+
+function CodeLayout()
+    call CodeMode()
+    Wmanager
+    Tlist
+endfunction
+command -nargs=0 CodeLayout call CodeLayout()
+
+function CodeLayoutSmall(c)
+    call CodeLayout()
+    let &columns=a:c
+    exec "norm \<c-w>t"
+    set winfixwidth
+    exec "norm \<c-w>j"
+    set winfixwidth
+    set winfixheight
+    exec "norm \<c-w>l"
+    set nu
+    set lines=56
+    exec "norm \<c-w>b"
+    set winfixwidth
+    exec "norm \<c-w>t"
+    exec "norm \<c-w>l"
+endfunction
+command -nargs=0 CodeLayoutSmall call CodeLayoutSmall(141)
+
+function CodeLayoutLarge(c)
+    call CodeLayout()
+    let &columns=a:c
+    exec "norm \<c-w>t"
+    set winfixwidth
+    exec "norm \<c-w>j"
+    set winfixwidth
+    set winfixheight
+    exec "norm \<c-w>l"
+    set nu
+    vsplit
+    set lines=76
+    exec "norm \<c-w>b"
+    set winfixwidth
+    exec "norm \<c-w>t"
+    exec "norm \<c-w>l"
+endfunction
+command -nargs=0 CodeLayoutLarge call CodeLayoutLarge(226)
+
+function TtySize()
+    set columns=80
+    set lines=24
+endfunction
+command -nargs=0 TtySize call TtySize()
+
+
+"===========================================================================
+" Plugins settings
+"===========================================================================
+" Sketch
+command -nargs=0 ToggleSketch call ToggleSketch()
+
+" Tlist
+let Tlist_Use_Right_Window=1
+let Tlist_File_Fold_Auto_Close=1
+
+" A
+let g:alternateNoDefaultAlternate=1
+let g:alternateRelativeFiles=1
+
+" Viki
+let g:vikiNameSuffix=".viki"
+
+" FencView
+let g:fencview_autodetect=0
+
+" showmarks
+let g:showmarks_enable=0
+let g:showmarks_include="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let g:showmarks_hlline_lower=1
+let g:showmarks_hlline_upper=1
+
+
+"===========================================================================
+" File types
+"===========================================================================
+augr filetype
+
+" BBS
+au! BufRead,BufNewFile *.bbs BBSMode
+
+" Mail
+au! FileType mail call MailMode()
+
+" Viki
+au! BufRead,BufNewFile *.viki VikiMode
+augr end
+
+
+"===========================================================================
+" Platform dependent settings
+"===========================================================================
+if (has("win32"))
+    "-------------------------------------------------------------------------
+    " Win32
+    "-------------------------------------------------------------------------
+    if (has("gui_running"))
+        set guifont=DejaVu_Sans_Mono:h9:cANSI
+        set guifontwide=NSimSun:h9:cGB2312
+    endif
+
+    " For Viki
+    let g:netrw_browsex_viewer="start"
+
+    " For tee
+    set shellpipe=2>&1\|\ tee
+
+    " VimTweak
+    if (has("gui_running"))
+        command -nargs=1 SetAlpha call libcallnr("vimtweak.dll", \"SetAlpha", <args>)
+        command -nargs=0 TopMost call libcallnr("vimtweak.dll", \"EnableTopMost", 1)
+        command -nargs=0 NoTopMost call libcallnr("vimtweak.dll", \"EnableTopMost", 0)
+    endif
+else
+    "-------------------------------------------------------------------------
+    " Linux
+    "-------------------------------------------------------------------------
+    if (has("gui_running"))
+        set guifont=DejaVu\ Sans\ Mono\ 9
+    endif
+
+    " For Viki
+    let g:vikiHomePage="~/Documents/Viki/index.viki"
+    let g:netrw_browsex_viewer="kfmclient exec"
+    set makeprg=build
+endif
+set nomousehide
+
+
+本配置文件中要用的插件的下载地址：http://edyfox.codecarver.org/html/vimfiles.tar.bz2。
+有关本配置文件及其插件的使用方法请参见滇狐的个人主页。
+
+
+
+                                附录五  参考
+
+Vim官方手册（7.3版本）：http://vimdoc.sourceforge.net/ （英文版官网）
+                     http://vimcdoc.sourceforge.net/（中文版官网）
+鸟哥的Linux私房菜：基础学习篇（第二版），鸟哥 著，王世江 改编，人民邮电出版社
+鸟哥的私房菜：  http://vbird.dic.ksu.edu.tw/  （简体）
+              http://linux.vbird.org/      （繁体）
+滇狐的个人主页： http://edyfox.codecarver.org/html/index.html
+
+注：Vim的标准官方文档已全部由Vim中文社区翻译成中文，并保持着与英文原版同步。
+Vim中文文档官网：http://vimcdoc.sourceforge.net/。

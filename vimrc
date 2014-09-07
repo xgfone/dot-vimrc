@@ -2,6 +2,21 @@ source ~/.vim/bundles.vim
 
 " encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set fileformats=unix,dos,mac
+set encoding=utf-8
+if has("win32")
+    set fileencoding=chinese
+else
+    set fileencoding=utf-8
+endif
+
+" solve the menu messy code.
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+set langmenu=zh_CN.utf-8
+
+" solve the command line messy code.
+language messages zh_CN.utf-8
 
 " enable filetype dectection and ft specific plugin/indent
 filetype plugin indent on
@@ -9,23 +24,96 @@ filetype plugin indent on
 " enable syntax hightlight and completion
 syntax on
 
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader=","
+let g:mapleader=","
+
+" For regular expressions turn magic on
+set magic
+
+" Remember info about open buffers on close
+set viminfo^=%
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
 "--------
 " Vim UI
 "--------
+" Display the TAB
+"set list listchars=tab:>-,
+
+" Highlight the TAB
+autocmd BufWinEnter * syntax match StartTAB /\t\+/
+autocmd InsertLeave * syntax match StartTAB /\t\+/
+autocmd InsertEnter * syntax match StartTAB /\t\+/
+let b:StartTABToggle=0
+function! ToggleHighlightStartTAB()
+    if !b:StartTABToggle
+        let b:StartTABToggle=1
+        highlight StartTAB ctermbg=red guibg=red
+    else
+        let b:StartTABToggle=0
+        highlight StartTAB ctermbg=NONE guibg=NONE
+    endif
+endfunction
+command! -bar ToggleHighlightStartTAB call ToggleHighlightStartTAB()
+nmap <F7> :ToggleHighlightStartTAB<cr>
+
+" Turn on the WiLd menu
+set wildmenu
+
+"Always show current position
+set ruler
+
+" Set the linespace
+"set linespace=6
+
+" Height of the command bar
+"set cmdheight=2
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
 " color scheme
 set background=dark
-color solarized
+if has("gui_running")
+    color default
+    "color solarized
+else
+    color fisa
+endif
 
 " highlight current line
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
-set cursorline cursorcolumn
+"set cursorline cursorcolumn
+set cursorline
+
+" Add a bit extra margin to the left
+set foldcolumn=1
+
+" Highlight the assigned columns
+try
+    set cc=80,120
+    "hi ColorColumn guibg=#5050
+catch
+endtry
 
 " search
 set incsearch
 "set highlight 	" conflict with highlight current line
 set ignorecase
 set smartcase
+set hlsearch       " Highlight search results
 
 " editor settings
 set history=1000
@@ -33,10 +121,11 @@ set nocompatible
 set nofoldenable                                                  " disable folding"
 set confirm                                                       " prompt when existing from an unsaved file
 set backspace=indent,eol,start                                    " More powerful backspacing
+set whichwrap+=<,>,h,l
 set t_Co=256                                                      " Explicitly tell vim that the terminal has 256 colors "
 set mouse=a                                                       " use mouse in all modes
-set report=0                                                      " always report number of lines changed                "
-set nowrap                                                        " dont wrap lines
+set report=0                                                      " always report number of lines changed"
+set wrap                                                          " dont wrap lines
 set scrolloff=5                                                   " 5 lines above/below cursor when scrolling
 set number                                                        " show line numbers
 set showmatch                                                     " show matching bracket (briefly jump)
@@ -45,7 +134,7 @@ set title                                                         " show file in
 set laststatus=2                                                  " use 2 lines for the status bar
 set matchtime=2                                                   " show matching bracket for 0.2 seconds
 set matchpairs+=<:>                                               " specially for html
-" set relativenumber
+"set relativenumber
 
 " Default Indentation
 set autoindent
@@ -53,8 +142,9 @@ set smartindent     " indent when
 set tabstop=4       " tab width
 set softtabstop=4   " backspace
 set shiftwidth=4    " indent width
-" set textwidth=79
-" set smarttab
+"set textwidth=79
+"set linebreak
+set smarttab
 set expandtab       " expand tab to space
 
 autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
@@ -64,6 +154,7 @@ autocmd FileType coffee,javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType h,c,hxx,hpp,cc,cpp setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=120 noexpandtab
 
 " syntax support
 autocmd Syntax javascript set syntax=jquery   " JQuery syntax support
@@ -97,6 +188,13 @@ let g:rbpt_colorpairs = [
 let g:rbpt_max = 16
 autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
 
+" vim-go
+" Disable the autoinstall
+let g:go_disable_autoinstall = 1
+
+" fencview
+let g:fencview_autodetect = 1
+
 " tabbar
 let g:Tb_MaxSize = 2
 let g:Tb_TabWrap = 1
@@ -116,29 +214,29 @@ let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_compact = 1
 " tag for coffee
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-
-  let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'sort' : 0,
-    \ 'kinds' : [
-        \ 'h:sections'
-    \ ]
-    \ }
-endif
+"if executable('coffeetags')
+"  let g:tagbar_type_coffee = {
+"        \ 'ctagsbin' : 'coffeetags',
+"        \ 'ctagsargs' : '',
+"        \ 'kinds' : [
+"        \ 'f:functions',
+"        \ 'o:object',
+"        \ ],
+"        \ 'sro' : ".",
+"        \ 'kind2scope' : {
+"        \ 'f' : 'object',
+"        \ 'o' : 'object',
+"        \ }
+"        \ }
+"
+"  let g:tagbar_type_markdown = {
+"    \ 'ctagstype' : 'markdown',
+"    \ 'sort' : 0,
+"    \ 'kinds' : [
+"        \ 'h:sections'
+"    \ ]
+"    \ }
+"endif
 
 " Nerd Tree
 let NERDChristmasTree=0
@@ -163,8 +261,8 @@ let g:user_emmet_expandabbr_key='<C-j>'
 " NeoComplCache
 let g:neocomplcache_enable_at_startup=1
 let g:neoComplcache_disableautocomplete=1
-"let g:neocomplcache_enable_underbar_completion = 1
-"let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1    " enable
+let g:neocomplcache_enable_camel_case_completion = 1  " enable
 let g:neocomplcache_enable_smart_case=1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
@@ -187,13 +285,33 @@ endif
 let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
 
 " SuperTab
-" let g:SuperTabDefultCompletionType='context'
-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+let g:SuperTabDefaultCompletionType='context'
+let g:SuperTabDefaultCompletionType='<C-X><C-U>'
 let g:SuperTabRetainCompletionType=2
 
 " ctrlp
-set wildignore+=*/tmp/*,*.so,*.o,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class,.DS_Store  " MacOSX/Linux
+set wildignore+=*/tmp/*,*.so,*.o,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class,.DS_Store,*#,*~  " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+
+" IndentGuides
+let g:indent_guides_guide_size=1
+let g:indent_guides_start_level = 1
+let g:indent_guides_space_guides = 1
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+"if g:isTerminal
+"    hi IndentGuidesOdd  ctermbg=236
+"    hi IndentGuidesEven ctermbg=237
+"else
+"endif
+
+
+" WinManager plugin
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap wm :WMToggle<cr>
+
 
 " Keybindings for plugin toggle
 nnoremap <F2> :set invpaste paste?<CR>
@@ -206,9 +324,22 @@ nmap  <D-/> :
 nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
 
+" vim-htmldjango_omnicomplete
+autocmd FileType htmldjango set omnifunc=htmldjangocomplete#CompleteDjango
+let g:htmldjangocomplete_html_flavour = 'html5'
+autocmd FileType htmldjango inoremap {% {% %}<left><left><left>
+autocmd FileType htmldjango inoremap {{ {{ }}<left><left><left>
+
+" trailing-whitespace
+autocmd BufWrite * :FixWhitespace
+
+
 "------------------
 " Useful Functions
 "------------------
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -235,6 +366,8 @@ nmap <D-]> >>
 nmap <D-[> <<
 vmap <D-[> <gv
 vmap <D-]> >gv
+map <leader>]  >>
+map <leader>[  <<
 
 " eggcache vim
 nnoremap ; :
@@ -248,10 +381,18 @@ nnoremap ; :
 " for macvim
 if has("gui_running")
     set go=aAce  " remove toolbar
+    set go+=mgriR " display menubar, scrollbar
     "set transparency=30
-    set guifont=Monaco:h13
+
+    if has("gui_mac")  " For Mac Vim
+        set guifont=DejaVuSansMono:h12,Monospace:h12
+    else               " For Gnome, Gtk+, Gtk+ 2, Win32, ...
+        set guifont=DejaVuSansMono\ 12,Monospace\ 12
+    endif
+
+    set guitablabel=%M\ %t
     set showtabline=2
-    set columns=140
+    set columns=120
     set lines=40
     noremap <D-M-Left> :tabprevious<cr>
     noremap <D-M-Right> :tabnext<cr>
