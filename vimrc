@@ -89,11 +89,11 @@ if has("gui_running")
     color default
     "color solarized
 else
-    " for linux shell
-    "color fisa
-
-    " for mac shell
-    color tomorrow
+    if has("mac") || has ("macunix")    " For Mac or Mac OS X
+        color tomorrow
+    else                                " For Linux, Windows, ...
+        color fisa
+    endif
 endif
 
 " highlight current line
