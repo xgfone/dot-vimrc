@@ -139,8 +139,8 @@ catch
 endtry
 
 " Highlight the current line and the current column
-set cursorline
-set cursorcolumn
+"set cursorline
+"set cursorcolumn
 hi CursorLine cterm=None ctermbg=darkred ctermfg=white
 hi CursorColumn cterm=None ctermbg=darkred ctermfg=white
 
