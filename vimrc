@@ -97,9 +97,11 @@ else
 endif
 
 " highlight current line
-au WinLeave * set nocursorline nocursorcolumn
-au WinEnter * set cursorline cursorcolumn
+"au WinLeave * set nocursorline nocursorcolumn
+"au WinEnter * set cursorline cursorcolumn
 "set cursorline cursorcolumn
+au WinLeave * set nocursorline
+au WinEnter * set cursorline
 set cursorline
 
 " Add a bit extra margin to the left
