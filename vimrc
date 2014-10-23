@@ -85,16 +85,7 @@ set hid
 
 " color scheme
 set background=dark
-if has("gui_running")
-    color default
-    "color solarized
-else
-    if has("mac") || has ("macunix")    " For Mac or Mac OS X
-        color tomorrow
-    else                                " For Linux, Windows, ...
-        color fisa
-    endif
-endif
+color desert
 
 " highlight current line
 "au WinLeave * set nocursorline nocursorcolumn
