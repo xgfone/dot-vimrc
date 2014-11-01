@@ -97,7 +97,7 @@ set foldcolumn=1
 
 " Highlight the assigned columns
 if &ft != "" && &ft != "text"
-    set noexpandtab
+    set expandtab
     set cc=80,120
     "hi ColorColumn guibg=#5050
 endif
@@ -139,7 +139,7 @@ set shiftwidth=4    " indent width
 "set textwidth=79
 "set linebreak
 set smarttab
-set expandtab       " expand tab to space
+"set expandtab       " expand tab to space
 
 autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
