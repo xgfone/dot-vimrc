@@ -95,13 +95,6 @@ color desert
 " Add a bit extra margin to the left
 set foldcolumn=1
 
-" Highlight the assigned columns
-if &ft != "" && &ft != "text"
-    set expandtab
-    set cc=80,120
-    "hi ColorColumn guibg=#5050
-endif
-
 " search
 set incsearch
 "set highlight 	" conflict with highlight current line
