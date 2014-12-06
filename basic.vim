@@ -279,8 +279,23 @@ set viminfo^=%
 " Always show the status line
 set laststatus=2
 
+function! GetFilesize() " {{{
+	let bytes = getfsize(expand("%:p"))
+
+	if bytes <= 0
+		return ''
+	endif
+
+	if bytes < 1024
+		return bytes . 'B'
+	else
+		return (bytes / 1024) . 'kB'
+	endif
+endfunction "}}}
+
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+"set statusline=\ %{HasPaste()}%F%m%r%h\ CWD:\ %r%{getcwd()}%h\ %w\ %y\ \ %p%%[%{GetFilesize()}]\ \ L:%l\ C:%c
+set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ \ %p%%[%{GetFilesize()}]\ \ L:%l\ C:%c
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
