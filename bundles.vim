@@ -85,7 +85,7 @@ Bundle 'tpope/vim-markdown'
 " Bundle 'tpope/vim-endwise'
 
 "------- Go ----------
-"Bundle 'fatih/vim-go'
+Bundle 'fatih/vim-go'
 
 "------- Rust --------
 Bundle 'rust-lang/rust.vim'
