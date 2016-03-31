@@ -143,6 +143,9 @@ autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 soft
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType h,c,hxx,hpp,cc,cpp setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=120 noexpandtab
 
+" Tab Page
+set tabpagemax=30
+
 " syntax support
 autocmd Syntax javascript set syntax=jquery   " JQuery syntax support
 " js
