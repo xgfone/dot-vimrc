@@ -142,6 +142,7 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType h,c,hxx,hpp,cc,cpp setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=120 noexpandtab
+autocmd FileType go call SetGoPath()
 
 " Tab Page
 set tabpagemax=30
@@ -183,6 +184,42 @@ autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
 let g:go_disable_autoinstall = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
+
+function! SetGoPath()
+	if $GOPATH == ''
+		let $GOPATH=$HOME . "/go"
+	endif
+endfunction
+
+
+" gotags
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 
 " fencview
 let g:fencview_autodetect = 1
