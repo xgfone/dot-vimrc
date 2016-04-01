@@ -181,6 +181,8 @@ autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
 " vim-go
 " Disable the autoinstall
 let g:go_disable_autoinstall = 1
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
 
 " fencview
 let g:fencview_autodetect = 1
