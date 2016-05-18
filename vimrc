@@ -164,6 +164,13 @@ let g:html_indent_style1 = "inc"
 "-----------------
 " Plugin settings
 "-----------------
+
+" vim-markdown
+autocmd BufNewFile,BufReadPost *.md,*.txt set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'c', 'css']
+" Disable markdown syntax
+let g:markdown_syntax_conceal = 0
+
 " Rainbow parentheses for Lisp and variants
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
