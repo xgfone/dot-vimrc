@@ -68,6 +68,13 @@ endfunction
 command! -bar ToggleHighlightStartTAB call ToggleHighlightStartTAB()
 nmap <F7> :ToggleHighlightStartTAB<cr>
 
+" Highlight the assigned column
+try
+    set cc=80,100,120
+    "hi ColorColumn guibg=#5050
+catch
+endtry
+
 " Turn on the WiLd menu
 set wildmenu
 
