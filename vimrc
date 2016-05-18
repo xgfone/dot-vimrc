@@ -407,6 +407,9 @@ autocmd BufReadPost *
 " w!! to sudo & write a file
 cmap w!! %!sudo tee >/dev/null %
 
+" Map <Ctrl>+F12 to ctags.
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
