@@ -80,6 +80,7 @@ Bundle 'nono/jquery.vim'
 "------- markup language -------
 Bundle 'tpope/vim-markdown'
 " Bundle 'timcharper/textile.vim'
+Bundle 'iamcco/markdown-preview.vim'
 
 "------- Ruby --------
 " Bundle 'tpope/vim-endwise'

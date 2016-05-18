@@ -166,10 +166,17 @@ let g:html_indent_style1 = "inc"
 "-----------------
 
 " vim-markdown
-autocmd BufNewFile,BufReadPost *.md,*.markdown,*.mkd,*.txt set filetype=markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'c', 'css']
-" Disable markdown syntax
-let g:markdown_syntax_conceal = 0
+autocmd BufNewFile,BufReadPost *.{md,markdown,mkd,txt} set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'c', 'css', 'javascript']
+
+" markdown-preview.vim
+" path to the chrome or the command to open chrome(or other modern browsers)
+"let g:mkdp_path_to_chrome = "google-chrome"
+
+" set to 1, the vim will just refresh markdown when save the buffer or leave from
+" insert mode, default 0 is auto refresh markdown as you edit or move the cursor.
+"let g:mkdp_refresh_slow = 0
+
 
 " Rainbow parentheses for Lisp and variants
 let g:rbpt_colorpairs = [
