@@ -185,7 +185,7 @@ YAML         | js-yaml       | `npm install -g js-yaml`
    - racket
    - clojure
    - scale
-  
+
 
 ## Themes
 
@@ -227,7 +227,7 @@ Clone in Mac
 
 3. Setup `Vundle`:
 
-        git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 4. Install bundles. Launch vim(ignore the errors and they will disappear after installing needed plugins)and run:
 
