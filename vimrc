@@ -177,6 +177,16 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'c', 'css'
 " insert mode, default 0 is auto refresh markdown as you edit or move the cursor.
 "let g:mkdp_refresh_slow = 0
 
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it just can be use in markdown file
+let g:mkdp_command_for_global = 0
+
+" Bind shortcut key for Markdown-Preview
+nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+
 
 " Rainbow parentheses for Lisp and variants
 let g:rbpt_colorpairs = [
