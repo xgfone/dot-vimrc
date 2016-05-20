@@ -460,8 +460,8 @@ if has("gui_running")
 
     set guitablabel=%M\ %t
     set showtabline=2
-    set columns=100
-    set lines=40
+    set columns=80
+    set lines=30
     noremap <D-M-Left> :tabprevious<cr>
     noremap <D-M-Right> :tabnext<cr>
     map <D-1> 1gt
