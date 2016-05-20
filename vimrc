@@ -452,11 +452,12 @@ if has("gui_running")
     set go+=mgriR " display menubar, scrollbar
     "set transparency=30
 
-    if has("gui_mac")  " For Mac Vim
-        set guifont=DejaVuSansMono:h12,Monospace:h12
-    else               " For Gnome, Gtk+, Gtk+ 2, Win32, ...
-        set guifont=DejaVuSansMono\ 12,Monospace\ 12
-    endif
+    "if has("gui_mac")  " For Mac Vim
+    "    set guifont=DejaVuSansMono:h12,Monospace:h12
+    "else               " For Gnome, Gtk+, Gtk+ 2, Win32, ...
+    "    set guifont=DejaVuSansMono\ 12,Monospace\ 12
+    "endif
+    set guifont=DejaVuSansMono:h12,Monospace:h12,Courier\ New:h14
 
     set guitablabel=%M\ %t
     set showtabline=2
