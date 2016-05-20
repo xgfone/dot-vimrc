@@ -425,6 +425,9 @@ map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
+" Quickly open the vim docs
+nmap <silent> <leader>doc :e ~/.vim/docs/vim-doc.txt<CR>
+
 " sublime key bindings
 nmap <D-]> >>
 nmap <D-[> <<
