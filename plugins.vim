@@ -179,6 +179,7 @@ function! SetGoPath()
         let $GOPATH=$HOME . "/go"
     endif
 endfunction
+autocmd FileType go call SetGoPath()
 
 
 " gotags

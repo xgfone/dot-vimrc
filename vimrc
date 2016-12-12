@@ -169,7 +169,6 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType h,c,hxx,hpp,cc,cpp setlocal tabstop=8 shiftwidth=8 softtabstop=8 textwidth=120 noexpandtab
-autocmd FileType go call SetGoPath()
 
 " js
 let g:html_indent_inctags = "html,body,head,tbody"
