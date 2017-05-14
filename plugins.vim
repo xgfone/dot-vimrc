@@ -73,17 +73,8 @@ Bundle 'pangloss/vim-javascript'
 "Bundle 'lepture/vim-jinja'
 "Bundle 'digitaltoad/vim-jade'
 
-"------- Ruby --------
-"Bundle 'tpope/vim-endwise'
-
 "------- Rust --------
 "Bundle 'rust-lang/rust.vim'
-
-"------- FPs ------
-"Bundle 'kien/rainbow_parentheses.vim'
-"Bundle 'wlangstroth/vim-racket'
-"Bundle 'vim-scripts/VimClojure'
-"Bundle 'rosstimson/scala-vim-support'
 
 "--------------
 " Color Schemes
@@ -126,29 +117,6 @@ nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
 imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
 
 
-" Rainbow parentheses for Lisp and variants
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
-
-
 " vim-go
 " Disable the autoinstall
 let g:go_disable_autoinstall = 1
@@ -160,9 +128,6 @@ function! SetGoPath()
         let $GOPATH=$HOME . "/go"
     endif
 endfunction
-
-
-" gotags
 
 
 " fencview
@@ -299,10 +264,6 @@ let NERDSpaceDelims=1
 let NERDCompactSexyComs=1
 
 
-" ZenCoding
-"let g:user_emmet_expandabbr_key='<C-j>'
-
-
 " powerline
 "let g:Powerline_symbols = 'fancy'
 let g:Powerline_colorscheme='solarized256'
@@ -364,7 +325,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
 " WinManager plugin
 let g:winManagerWindowLayout='FileExplorer|TagList'
-nmap wm :WMToggle<cr>
+
+
+" trailing-whitespace
+autocmd BufWrite * :FixWhitespace
 
 
 " Keybindings for plugin toggle
@@ -374,17 +338,8 @@ nmap <F5> :TagbarToggle<cr>
 nmap <F6> :NERDTreeToggle<cr>
 nmap <F3> :GundoToggle<cr>
 nmap <F4> :IndentGuidesToggle<cr>
-nmap  <D-/> :
+nmap <D-/> :
+nmap wm :WMToggle<cr>
 nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
 
-
-" vim-htmldjango_omnicomplete
-autocmd FileType htmldjango set omnifunc=htmldjangocomplete#CompleteDjango
-let g:htmldjangocomplete_html_flavour = 'html5'
-autocmd FileType htmldjango inoremap {% {% %}<left><left><left>
-autocmd FileType htmldjango inoremap {{ {{ }}<left><left><left>
-
-
-" trailing-whitespace
-autocmd BufWrite * :FixWhitespace
