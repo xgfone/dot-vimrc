@@ -3,43 +3,34 @@
 "==========================================================
 set nocompatible               " be iMproved
 filetype off                   " required!
-
 set rtp+=~/.vim/bundle/Vundle.vim
 "call vundle#rc()
+
 " The plugin vundle MUST be between vundle#begin() and vundle#end().
 call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
+" let Vundle manage Vundle (required!)
 Bundle 'VundleVim/Vundle.vim'
 
 "------------------
 " Code Completions
 "------------------
-Bundle 'Shougo/neocomplcache'
-Bundle 'mattn/emmet-vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'ervandew/supertab'
-" snippets
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
-"------ snipmate dependencies -------
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
+Bundle 'Shougo/neocomplcache'			" Ultimate auto-completion system for Vim.
+Bundle 'Raimondi/delimitMate'			" provides insert mode auto-completion for quotes, parens, brackets, etc.
+Bundle 'ervandew/supertab'				" Perform all your vim insert mode completions with Tab
 
 "-----------------
 " Fast navigation
 "-----------------
-Bundle 'Lokaltog/vim-easymotion'
+Bundle 'easymotion/vim-easymotion'			" Vim motions on speed!
 
 "--------------
 " Fast editing
 "--------------
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/gundo.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'scrooloose/nerdcommenter'			" Comment functions.
+Bundle 'sjl/gundo.vim'						" visualize your Vim undo tree.
+Bundle 'nathanaelkane/vim-indent-guides'	" visually display indent levels.
+Bundle 'godlygeek/tabular'					" text filtering and alignment.
 
 "--------------
 " IDE features
@@ -48,8 +39,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'scrooloose/syntastic'
 Bundle 'bronson/vim-trailing-whitespace'
@@ -65,50 +54,42 @@ Bundle 'mbbill/fencview'
 "----------------------------------------
 " Syntax/Indent for language enhancement
 "----------------------------------------
-"------- web backend ---------
-"Bundle '2072/PHP-Indenting-for-VIm'
-"Bundle 'tpope/vim-rails'
-Bundle 'lepture/vim-jinja'
-"Bundle 'digitaltoad/vim-jade'
-
-"------- web frontend ----------
-Bundle 'othree/html5.vim'
-" Bundle 'tpope/vim-haml'
-Bundle 'pangloss/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'nono/jquery.vim'
-" Bundle 'groenewege/vim-less'
-" Bundle 'wavded/vim-stylus'
-" Bundle 'nono/vim-handlebars'
-
-"------- markup language -------
-Bundle 'tpope/vim-markdown'
-" Bundle 'timcharper/textile.vim'
-Bundle 'iamcco/markdown-preview.vim'
-
-"------- Ruby --------
-" Bundle 'tpope/vim-endwise'
-
 "------- Go ----------
 Bundle 'fatih/vim-go'
 
+"------- markup language -------
+Bundle 'tpope/vim-markdown'
+Bundle 'iamcco/markdown-preview.vim'
+
+"------- web frontend ----------
+Bundle 'othree/html5.vim'
+Bundle 'pangloss/vim-javascript'
+"Bundle 'nono/jquery.vim'
+"Bundle 'kchmck/vim-coffee-script'
+"Bundle 'groenewege/vim-less'
+"Bundle 'mustache/vim-mustache-handlebars'
+
+"------- web backend ---------
+"Bundle 'lepture/vim-jinja'
+"Bundle 'digitaltoad/vim-jade'
+
+"------- Ruby --------
+"Bundle 'tpope/vim-endwise'
+
 "------- Rust --------
-Bundle 'rust-lang/rust.vim'
+"Bundle 'rust-lang/rust.vim'
 
 "------- FPs ------
 "Bundle 'kien/rainbow_parentheses.vim'
-" Bundle 'wlangstroth/vim-racket'
-" Bundle 'vim-scripts/VimClojure'
-" Bundle 'rosstimson/scala-vim-support'
+"Bundle 'wlangstroth/vim-racket'
+"Bundle 'vim-scripts/VimClojure'
+"Bundle 'rosstimson/scala-vim-support'
 
 "--------------
 " Color Schemes
 "--------------
-Bundle 'rickharris/vim-blackboard'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'rickharris/vim-monokai'
-Bundle 'tpope/vim-vividchalk'
-Bundle 'Lokaltog/vim-distinguished'
 Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'fisadev/fisa-vim-colorscheme'
 
@@ -179,10 +160,37 @@ function! SetGoPath()
         let $GOPATH=$HOME . "/go"
     endif
 endfunction
-autocmd FileType go call SetGoPath()
 
 
 " gotags
+
+
+" fencview
+let g:fencview_autodetect = 1
+
+
+" tabbar
+let g:Tb_MaxSize = 2
+let g:Tb_TabWrap = 1
+
+hi Tb_Normal guifg=white ctermfg=white
+hi Tb_Changed guifg=green ctermfg=green
+hi Tb_VisibleNormal ctermbg=252 ctermfg=235
+hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
+
+
+" easy-motion
+let g:EasyMotion_leader_key = '<Leader>'
+
+
+" Tagbar
+let g:tagbar_left=1
+let g:tagbar_width=30
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+let g:tagbar_compact = 1
+
+" tag for go
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -211,31 +219,42 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+" tag for C/C++
+let g:tagbar_type_cpp = {
+     \ 'ctagstype' : 'c++',
+     \ 'kinds'     : [
+         \ 'c:classes:0:1',
+         \ 'd:macros:0:1',
+         \ 'e:enumerators:0:0',
+         \ 'f:functions:0:1',
+         \ 'g:enumeration:0:1',
+         \ 'l:local:0:1',
+         \ 'm:members:0:1',
+         \ 'n:namespaces:0:1',
+         \ 'p:functions_prototypes:0:1',
+         \ 's:structs:0:1',
+         \ 't:typedefs:0:1',
+         \ 'u:unions:0:1',
+         \ 'v:global:0:1',
+         \ 'x:external:0:1'
+     \ ],
+     \ 'sro'        : '::',
+     \ 'kind2scope' : {
+         \ 'g' : 'enum',
+         \ 'n' : 'namespace',
+         \ 'c' : 'class',
+         \ 's' : 'struct',
+         \ 'u' : 'union'
+     \ },
+     \ 'scope2kind' : {
+         \ 'enum'      : 'g',
+         \ 'namespace' : 'n',
+         \ 'class'     : 'c',
+         \ 'struct'    : 's',
+         \ 'union'     : 'u'
+     \ }
+\ }
 
-" fencview
-let g:fencview_autodetect = 1
-
-
-" tabbar
-let g:Tb_MaxSize = 2
-let g:Tb_TabWrap = 1
-
-hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=green ctermfg=green
-hi Tb_VisibleNormal ctermbg=252 ctermfg=235
-hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
-
-
-" easy-motion
-let g:EasyMotion_leader_key = '<Leader>'
-
-
-" Tagbar
-let g:tagbar_left=1
-let g:tagbar_width=30
-let g:tagbar_autofocus = 1
-let g:tagbar_sort = 0
-let g:tagbar_compact = 1
 " tag for coffee
 "if executable('coffeetags')
 "  let g:tagbar_type_coffee = {
@@ -267,8 +286,10 @@ let NERDChristmasTree=0
 let NERDTreeWinSize=30
 let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
-" let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
+"let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
+let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
+let NERDTreeAutoDeleteBuffer=1
 let NERDTreeWinPos = "right"
 
 
@@ -284,6 +305,7 @@ let NERDCompactSexyComs=1
 
 " powerline
 "let g:Powerline_symbols = 'fancy'
+let g:Powerline_colorscheme='solarized256'
 
 
 " NeoComplCache
