@@ -15,22 +15,22 @@ Bundle 'VundleVim/Vundle.vim'
 "------------------
 " Code Completions
 "------------------
-Bundle 'Shougo/neocomplcache'			" Ultimate auto-completion system for Vim.
-Bundle 'Raimondi/delimitMate'			" provides insert mode auto-completion for quotes, parens, brackets, etc.
-Bundle 'ervandew/supertab'				" Perform all your vim insert mode completions with Tab
+Bundle 'Shougo/neocomplcache'
+Bundle 'Raimondi/delimitMate'
+Bundle 'ervandew/supertab'
 
 "-----------------
 " Fast navigation
 "-----------------
-Bundle 'easymotion/vim-easymotion'			" Vim motions on speed!
+Bundle 'easymotion/vim-easymotion'
 
 "--------------
 " Fast editing
 "--------------
-Bundle 'scrooloose/nerdcommenter'			" Comment functions.
-Bundle 'sjl/gundo.vim'						" visualize your Vim undo tree.
-Bundle 'nathanaelkane/vim-indent-guides'	" visually display indent levels.
-Bundle 'godlygeek/tabular'					" text filtering and alignment.
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'sjl/gundo.vim'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'godlygeek/tabular'
 
 "--------------
 " IDE features
@@ -40,7 +40,7 @@ Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'scrooloose/syntastic'
+Bundle 'vim-syntastic/syntastic'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'vim-scripts/winmanager'
 
