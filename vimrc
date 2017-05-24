@@ -5,7 +5,7 @@ try
 	source ~/.vim/plugins.vim
 catch
 	" Format the status line
-	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ \ %p%%[%{GetFilesize()}]\ \ L:%l\ C:%c
+	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ [%{&ff}]\ %p%%[%{GetFilesize()}]\ L:%l\ C:%c\ %{strftime(\"%d/%m/%y\ %H:%M\")}
 
 	" Delete the trailing whitespace automatically.
 	autocmd BufWrite * :call DeleteTrailingWS()
