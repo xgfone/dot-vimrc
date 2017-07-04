@@ -110,7 +110,6 @@ set nobackup						" disable the backup file after overwriting
 set nowb							" disable the backup file before overwriting
 set tabpagemax=30					" Tab Page
 set textwidth=120
-set paste                           " Set the paste mode
 "set mouse=a						" use mouse in all modes
 "set relativenumber
 "set linebreak
