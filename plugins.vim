@@ -15,9 +15,9 @@ Plugin 'VundleVim/Vundle.vim'
 "------------------
 " Code Completions
 "------------------
-Plugin 'Shougo/neocomplcache'
-Plugin 'Raimondi/delimitMate'
-Plugin 'ervandew/supertab'
+Plugin 'Shougo/neocomplete.vim'	" Next generation completion framework. Require +Lua.
+Plugin 'Raimondi/delimitMate'	" Auto-completion for quotes, parens, brackets, etc.
+Plugin 'ervandew/supertab'		" Perform the insert mode completions with Tab.
 
 "-----------------
 " Fast navigation
@@ -27,62 +27,65 @@ Plugin 'easymotion/vim-easymotion'
 "--------------
 " Fast editing
 "--------------
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'sjl/gundo.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'godlygeek/tabular'
+Plugin 'scrooloose/nerdcommenter'			" Comment functions.
+Plugin 'sjl/gundo.vim'						" Visualize your Vim undo tree.
+Plugin 'nathanaelkane/vim-indent-guides'	" Visually displaying indent levels.
+Plugin 'godlygeek/tabular'					" Text filtering and alignment.
 
 "--------------
 " IDE features
 "--------------
-Plugin 'scrooloose/nerdtree'
-Plugin 'humiaozuzu/TabBar'
-Plugin 'majutsushi/tagbar'
-Plugin 'mileszs/ack.vim'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'vim-scripts/winmanager'
+Plugin 'scrooloose/nerdtree'				" A tree explorer plugin.
+Plugin 'majutsushi/tagbar'					" A class outline viewer.
+Plugin 'powerline/powerline'				" A statusline plugin.
+Plugin 'vim-syntastic/syntastic'			" Syntax checking hacks for vim.
+Plugin 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespace.
+Plugin 'vim-scripts/winmanager'				" A windows style IDE, such as the file explorer.
+Plugin 'mileszs/ack.vim'					" Run the search tool [ack].
+Plugin 'humiaozuzu/TabBar'					" Add tab bar.
 
 "-------------
 " Other Utils
 "-------------
 " Plugin 'humiaozuzu/fcitx-status'
-Plugin 'nvie/vim-togglemouse'
-Plugin 'mbbill/fencview'
+Plugin 'nvie/vim-togglemouse'		" Toggle the mouse focus between Vim and terminal emulator.
+Plugin 'mbbill/fencview'			" Auto detect CJK and Unicode file encodings.
+Plugin 'skywind3000/asyncrun.vim'	" Run Async Shell Commands and Output to Quickfix Window.
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
 "----------------------------------------
 "------- Go ----------
-Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'					" Go development plugin for Vim.
+
+"------- Python -------
+Plugin 'python-mode/python-mode'		" Python support. Conflict with jedi-vim.
+"Plugin 'davidhalter/jedi-vim'			" Python autocompletion by using Jedi.
 
 "------- markup language -------
-Plugin 'tpope/vim-markdown'
-Plugin 'iamcco/markdown-preview.vim'
+Plugin 'tpope/vim-markdown'				" Syntax highlighting and filetype plugins for Markdown.
+Plugin 'iamcco/markdown-preview.vim'	" Real-time markdown preview.
 
 "------- web frontend ----------
-Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
-"Plugin 'nono/jquery.vim'
-"Plugin 'kchmck/vim-coffee-script'
-"Plugin 'groenewege/vim-less'
-"Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'othree/html5.vim'					" HTML5 omnicomplete and syntax.
+Plugin 'pangloss/vim-javascript'			" Vastly improved Javascript indentation and syntax.
+"Plugin 'kchmck/vim-coffee-script'			" CoffeeScript support.
+"Plugin 'groenewege/vim-less'				" Syntax highlight, indent and autocompletion for LESS.
+"Plugin 'mustache/vim-mustache-handlebars'	" mustache and handlebars mode
 
 "------- web backend ---------
-"Plugin 'lepture/vim-jinja'
-"Plugin 'digitaltoad/vim-jade'
+"Plugin 'lepture/vim-jinja'		" Jinja template engine syntax highlight and indent supoort.
+"Plugin 'digitaltoad/vim-pug'	" Pug (former Jade) template engine syntax highlight and indention.
 
 "------- Rust --------
-"Plugin 'rust-lang/rust.vim'
+"Plugin 'rust-lang/rust.vim'	" Rust syntax highlighting, formatting, Syntastic integration, etc.
 
 "--------------
 " Color Schemes
 "--------------
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'rickharris/vim-monokai'
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'fisadev/fisa-vim-colorscheme'
+Plugin 'chriskempson/base16-vim'
 
 " The plugin vundle ends.
 call vundle#end()
