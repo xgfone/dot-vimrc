@@ -10,79 +10,79 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle (required!)
-Bundle 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 "------------------
 " Code Completions
 "------------------
-Bundle 'Shougo/neocomplcache'
-Bundle 'Raimondi/delimitMate'
-Bundle 'ervandew/supertab'
+Plugin 'Shougo/neocomplcache'
+Plugin 'Raimondi/delimitMate'
+Plugin 'ervandew/supertab'
 
 "-----------------
 " Fast navigation
 "-----------------
-Bundle 'easymotion/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 
 "--------------
 " Fast editing
 "--------------
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/gundo.vim'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'godlygeek/tabular'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'sjl/gundo.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'godlygeek/tabular'
 
 "--------------
 " IDE features
 "--------------
-Bundle 'scrooloose/nerdtree'
-Bundle 'humiaozuzu/TabBar'
-Bundle 'majutsushi/tagbar'
-Bundle 'mileszs/ack.vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'vim-syntastic/syntastic'
-Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'vim-scripts/winmanager'
+Plugin 'scrooloose/nerdtree'
+Plugin 'humiaozuzu/TabBar'
+Plugin 'majutsushi/tagbar'
+Plugin 'mileszs/ack.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'vim-scripts/winmanager'
 
 "-------------
 " Other Utils
 "-------------
-" Bundle 'humiaozuzu/fcitx-status'
-Bundle 'nvie/vim-togglemouse'
-Bundle 'mbbill/fencview'
+" Plugin 'humiaozuzu/fcitx-status'
+Plugin 'nvie/vim-togglemouse'
+Plugin 'mbbill/fencview'
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
 "----------------------------------------
 "------- Go ----------
-Bundle 'fatih/vim-go'
+Plugin 'fatih/vim-go'
 
 "------- markup language -------
-Bundle 'tpope/vim-markdown'
-Bundle 'iamcco/markdown-preview.vim'
+Plugin 'tpope/vim-markdown'
+Plugin 'iamcco/markdown-preview.vim'
 
 "------- web frontend ----------
-Bundle 'othree/html5.vim'
-Bundle 'pangloss/vim-javascript'
-"Bundle 'nono/jquery.vim'
-"Bundle 'kchmck/vim-coffee-script'
-"Bundle 'groenewege/vim-less'
-"Bundle 'mustache/vim-mustache-handlebars'
+Plugin 'othree/html5.vim'
+Plugin 'pangloss/vim-javascript'
+"Plugin 'nono/jquery.vim'
+"Plugin 'kchmck/vim-coffee-script'
+"Plugin 'groenewege/vim-less'
+"Plugin 'mustache/vim-mustache-handlebars'
 
 "------- web backend ---------
-"Bundle 'lepture/vim-jinja'
-"Bundle 'digitaltoad/vim-jade'
+"Plugin 'lepture/vim-jinja'
+"Plugin 'digitaltoad/vim-jade'
 
 "------- Rust --------
-"Bundle 'rust-lang/rust.vim'
+"Plugin 'rust-lang/rust.vim'
 
 "--------------
 " Color Schemes
 "--------------
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'rickharris/vim-monokai'
-Bundle 'chriskempson/vim-tomorrow-theme'
-Bundle 'fisadev/fisa-vim-colorscheme'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'rickharris/vim-monokai'
+Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'fisadev/fisa-vim-colorscheme'
 
 " The plugin vundle ends.
 call vundle#end()
