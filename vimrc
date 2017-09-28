@@ -5,7 +5,9 @@ try
 	source ~/.vim/plugins.vim
 catch
 	" Format the status line
-	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ [%{&ff}]\ %p%%[%{GetFilesize()}]\ L:%l\ C:%c\ %{strftime(\"%d/%m/%y\ %H:%M\")}
+	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ [%{&ff}]\
+	set statusline+=%p%%[%{GetFilesize()}]\ L:%l\ C:%c\
+	set statusline+=%{strftime(\"%d/%m/%y\ %H:%M\")}
 
 	" Delete the trailing whitespace automatically.
 	autocmd BufWrite * :call DeleteTrailingWS()
@@ -64,6 +66,13 @@ set tm=500
 
 " Let the vimrc take effect immediately.
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" Ignore some files or directories.
+set wildignore+=*/tmp/*,*.swp,*.zip,.DS_Store,*#,*~		" MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe				" Windows
+set wildignore+=*s.so,*.o,*.a,*.obj,*.exe,*.so,*.dll	" C/C++
+set wildignore+=*.pyc,*.pyo								" Python
+set wildignore:=.git,.hg,.svn                           " SVC
 
 
 "----------------------
@@ -209,6 +218,10 @@ autocmd BufReadPost *
 "----------------------
 "	  Key Bindings
 "----------------------
+" Toggle the paste mode between paste and nopaste.
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+
 " Enable the command :Man to view the man information.
 source $VIMRUNTIME/ftplugin/man.vim
 nmap <Leader>man :Man 3 <cword><CR>

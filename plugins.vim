@@ -37,10 +37,9 @@ Plugin 'godlygeek/tabular'					" Text filtering and alignment.
 "--------------
 Plugin 'scrooloose/nerdtree'				" A tree explorer plugin.
 Plugin 'majutsushi/tagbar'					" A class outline viewer.
-Plugin 'powerline/powerline'				" A statusline plugin.
+Plugin 'vim-airline/vim-airline'			" A status/tab line plugin.
 Plugin 'vim-syntastic/syntastic'			" Syntax checking hacks for vim.
 Plugin 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespace.
-Plugin 'vim-scripts/winmanager'				" A windows style IDE, such as the file explorer.
 Plugin 'mileszs/ack.vim'					" Run the search tool [ack].
 Plugin 'humiaozuzu/TabBar'					" Add tab bar.
 
@@ -51,6 +50,7 @@ Plugin 'humiaozuzu/TabBar'					" Add tab bar.
 Plugin 'nvie/vim-togglemouse'		" Toggle the mouse focus between Vim and terminal emulator.
 Plugin 'mbbill/fencview'			" Auto detect CJK and Unicode file encodings.
 Plugin 'skywind3000/asyncrun.vim'	" Run Async Shell Commands and Output to Quickfix Window.
+Plugin 'ctrlpvim/ctrlp.vim'			" Full path fuzzy file, buffer, mru, tag, ... finder.
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
@@ -97,66 +97,174 @@ filetype plugin indent on     " required!
 "                  Plugin settings
 "==========================================================
 
-" vim-markdown
-autocmd BufNewFile,BufReadPost *.{md,markdown,mkd,txt} set filetype=markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go', 'c', 'css', 'javascript']
+"-----------------
+"   NeoComplete
+"-----------------
+" Disable AutoComplPop
+let g:acp_enableAtStartup=0
 
-" markdown-preview.vim
-" path to the chrome or the command to open chrome(or other modern browsers)
-"let g:mkdp_path_to_chrome = "google-chrome"
+" Use neocomplete.
+let g:neocomplete#enable_at_startup=1
 
-" set to 1, the vim will just refresh markdown when save the buffer or leave from
-" insert mode, default 0 is auto refresh markdown as you edit or move the cursor.
-"let g:mkdp_refresh_slow = 0
+" Use smartcase.
+let g:neocomplete#enable_smart_case=1
 
-" set to 1, the MarkdownPreview command can be use for all files,
-" by default it just can be use in markdown file
-let g:mkdp_command_for_global = 0
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
 
-" Bind shortcut key for Markdown-Preview
-nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
-imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
-nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
-imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ }
 
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" vim-go
-" Disable the autoinstall
-let g:go_disable_autoinstall = 1
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-function! SetGoPath()
-    if $GOPATH == ''
-        let $GOPATH=$HOME . "/go"
-    endif
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" fencview
-let g:fencview_autodetect = 1
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType c setlocal omnifunc=ccomplete#Complete
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting. https://github.com/c9s/perlomni.vim
+"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
-" tabbar
-let g:Tb_MaxSize = 2
-let g:Tb_TabWrap = 1
-
-hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=green ctermfg=green
-hi Tb_VisibleNormal ctermbg=252 ctermfg=235
-hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
+"---------------
+"   SuperTab
+"---------------
+let g:SuperTabDefaultCompletionType='context'
+let g:SuperTabDefaultCompletionType='<C-X><C-U>'
+let g:SuperTabRetainCompletionType=2
 
 
-" easy-motion
-let g:EasyMotion_leader_key = '<Leader>'
+"----------------
+"   easymotion
+"----------------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 
-" Tagbar
-let g:tagbar_left=1
+"-------------------
+"   nerdcommenter
+"-------------------
+" Add spaces after comment delimiters by default
+let NERDSpaceDelims=1
+
+" Use compact syntax for prettified multi-line comments
+let NERDCompactSexyComs=1
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+"let g:NERDDefaultAlign = 'left'
+
+" Add your own custom formats or override the defaults
+"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+
+"------------------
+"   IndentGuides
+"------------------
+let g:indent_guides_guide_size=1
+let g:indent_guides_start_level = 1
+let g:indent_guides_space_guides = 1
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_auto_colors = 0
+
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=darkgrey
+
+
+"---------------
+"   Nerd Tree
+"---------------
+let NERDChristmasTree=0
+let NERDTreeWinSize=30
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowHidden=1
+let NERDTreeShowBookmarks=1
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeWinPos = "left"
+
+
+"------------
+"   Tagbar
+"------------
+let g:tagbar_left=0
 let g:tagbar_width=30
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_compact = 1
+let g:tagbar_show_linenumbers=1
+
+" For Language, See https://github.com/majutsushi/tagbar/wiki.
 
 " tag for go
 let g:tagbar_type_go = {
@@ -223,126 +331,106 @@ let g:tagbar_type_cpp = {
      \ }
 \ }
 
-" tag for coffee
-"if executable('coffeetags')
-"  let g:tagbar_type_coffee = {
-"        \ 'ctagsbin' : 'coffeetags',
-"        \ 'ctagsargs' : '',
-"        \ 'kinds' : [
-"        \ 'f:functions',
-"        \ 'o:object',
-"        \ ],
-"        \ 'sro' : ".",
-"        \ 'kind2scope' : {
-"        \ 'f' : 'object',
-"        \ 'o' : 'object',
-"        \ }
-"        \ }
-"
-"  let g:tagbar_type_markdown = {
-"    \ 'ctagstype' : 'markdown',
-"    \ 'sort' : 0,
-"    \ 'kinds' : [
-"        \ 'h:sections'
-"    \ ]
-"    \ }
-"endif
+
+"-----------------
+"   vim-airline
+"-----------------
+let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 
 
-" Nerd Tree
-let NERDChristmasTree=0
-let NERDTreeWinSize=30
-let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
-"let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
-let NERDTreeShowHidden=1
-let NERDTreeShowBookmarks=1
-let NERDTreeAutoDeleteBuffer=1
-let NERDTreeWinPos = "right"
+"---------------
+"   syntasic
+"---------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" nerdcommenter
-let NERDSpaceDelims=1
-" nmap <D-/> :NERDComToggleComment<cr>
-let NERDCompactSexyComs=1
-
-
-" powerline
-"let g:Powerline_symbols = 'fancy'
-let g:Powerline_colorscheme='solarized256'
-
-
-" NeoComplCache
-let g:neocomplcache_enable_at_startup=1
-let g:neoComplcache_disableautocomplete=1
-let g:neocomplcache_enable_underbar_completion = 1    " enable
-let g:neocomplcache_enable_camel_case_completion = 1  " enable
-let g:neocomplcache_enable_smart_case=1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-set completeopt-=preview
-
-imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
-smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
-
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType c setlocal omnifunc=ccomplete#Complete
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
-
-
-" SuperTab
-let g:SuperTabDefaultCompletionType='context'
-let g:SuperTabDefaultCompletionType='<C-X><C-U>'
-let g:SuperTabRetainCompletionType=2
-
-
-" ctrlp
-set wildignore+=*/tmp/*,*.so,*.o,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class,.DS_Store,*#,*~  " MacOSX/Linux
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-
-
-" IndentGuides
-let g:indent_guides_guide_size=1
-let g:indent_guides_start_level = 1
-let g:indent_guides_space_guides = 1
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-"if g:isTerminal
-"    hi IndentGuidesOdd  ctermbg=236
-"    hi IndentGuidesEven ctermbg=237
-"else
-"endif
-
-
-" WinManager plugin
-let g:winManagerWindowLayout='FileExplorer|TagList'
-
-
-" trailing-whitespace
+"-------------------------
+"   trailing-whitespace
+"-------------------------
 autocmd BufWrite * :FixWhitespace
 
 
-" Keybindings for plugin toggle
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-nmap <F5> :TagbarToggle<cr>
-nmap <F6> :NERDTreeToggle<cr>
+"-------------
+"   ack.vim
+"-------------
+nnoremap <leader>a :Ack
+
+
+"------------
+"   tabbar
+"------------
+let g:Tb_MaxSize = 2
+let g:Tb_TabWrap = 1
+
+
+"--------------
+"   fencview
+"--------------
+let g:fencview_autodetect = 1
+
+
+"------------
+"   vim-go
+"------------
+" Disable the autoinstall
+let g:go_disable_autoinstall = 1
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+function! SetGoPath()
+    if $GOPATH == ''
+        let $GOPATH=$HOME . "/go"
+    endif
+endfunction
+
+
+"------------------
+"   vim-markdown
+"------------------
+autocmd BufNewFile,BufReadPost *.{md,markdown,mkd} set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'go']
+
+
+"--------------------------
+"   markdown-preview.vim
+"--------------------------
+" path to the chrome or the command to open chrome(or other modern browsers)
+"let g:mkdp_path_to_chrome = "google-chrome"
+
+" set to 1, the vim will just refresh markdown when save the buffer or leave
+" from insert mode, default 0 is auto refresh markdown as you edit or move
+" the cursor.
+"let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it just can be use in markdown file
+let g:mkdp_command_for_global = 0
+
+
+"--------------------
+"   vim-javascript
+"--------------------
+"let g:javascript_plugin_jsdoc = 1
+"let g:javascript_plugin_ngdoc = 1
+"let g:javascript_plugin_flow = 1
+
+
+"============================================================
+"                Keybindings for plugin
+"============================================================
 nmap <F3> :GundoToggle<cr>
 nmap <F4> :IndentGuidesToggle<cr>
-nmap <D-/> :
-nmap wm :WMToggle<cr>
-nnoremap <leader>a :Ack
-nnoremap <leader>v V`]
+nmap <F5> :NERDTreeToggle<cr>
+nmap <F6> :TagbarToggle<cr>
 
+" Bind shortcut key for Markdown-Preview
+nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
