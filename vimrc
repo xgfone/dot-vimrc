@@ -21,11 +21,12 @@ endtry
 " encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set fileformats=unix,dos,mac
-set encoding=utf-8
 if has("win32")
 	set fileencoding=chinese
+	set encoding=gbk
 else
 	set fileencoding=utf-8
+	set encoding=utf-8
 endif
 
 " solve the menu messy code.
@@ -68,11 +69,11 @@ set tm=500
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " Ignore some files or directories.
-set wildignore+=*/tmp/*,*.swp,*.zip,.DS_Store,*#,*~		" MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe				" Windows
-set wildignore+=*s.so,*.o,*.a,*.obj,*.exe,*.so,*.dll	" C/C++
-set wildignore+=*.pyc,*.pyo								" Python
-set wildignore:=.git,.hg,.svn                           " SVC
+set wildignore+=*/tmp/*,*.swp,*.zip,.DS_Store,*#,*~,		" MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,				" Windows
+set wildignore+=*s.so,*.o,*.a,*.obj,*.exe,*.so,*.dll,		" C/C++
+set wildignore+=*.pyc,*.pyo,								" Python
+set wildignore+=.git,.hg,.svn,								" SVC
 
 
 "----------------------

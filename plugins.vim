@@ -36,7 +36,7 @@ Plugin 'godlygeek/tabular'					" Text filtering and alignment.
 " IDE features
 "--------------
 Plugin 'scrooloose/nerdtree'				" A tree explorer plugin.
-Plugin 'majutsushi/tagbar'					" A class outline viewer.
+"Plugin 'majutsushi/tagbar'					" A class outline viewer.
 Plugin 'vim-airline/vim-airline'			" A status/tab line plugin.
 Plugin 'vim-syntastic/syntastic'			" Syntax checking hacks for vim.
 Plugin 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespace.
@@ -335,15 +335,15 @@ let g:tagbar_type_cpp = {
 "-----------------
 "   vim-airline
 "-----------------
-let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+"let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 
 
 "---------------
 "   syntasic
 "---------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -353,6 +353,7 @@ let g:syntastic_check_on_wq = 0
 "-------------------------
 "   trailing-whitespace
 "-------------------------
+let g:extra_whitespace_ignored_filetypes = ['mkd']
 autocmd BufWrite * :FixWhitespace
 
 
