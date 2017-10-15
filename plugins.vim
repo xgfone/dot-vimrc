@@ -16,7 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Code Completions
 "------------------
 Plugin 'Shougo/neocomplete.vim'	" Next generation completion framework. Require +Lua.
-Plugin 'Raimondi/delimitMate'	" Auto-completion for quotes, parens, brackets, etc.
+Plugin 'jiangmiao/auto-pairs'	" Insert or delete brackets, parens, quotes in pair.
 Plugin 'ervandew/supertab'		" Perform the insert mode completions with Tab.
 
 "-----------------
@@ -29,7 +29,8 @@ Plugin 'easymotion/vim-easymotion'
 "--------------
 Plugin 'scrooloose/nerdcommenter'			" Comment functions.
 Plugin 'sjl/gundo.vim'						" Visualize your Vim undo tree.
-Plugin 'nathanaelkane/vim-indent-guides'	" Visually displaying indent levels.
+Plugin 'Yggdroot/indentLine'                " Display the indention levels.
+"Plugin 'nathanaelkane/vim-indent-guides'	" Visually displaying indent levels.
 Plugin 'godlygeek/tabular'					" Text filtering and alignment.
 
 "--------------
@@ -42,6 +43,7 @@ Plugin 'vim-syntastic/syntastic'			" Syntax checking hacks for vim.
 Plugin 'bronson/vim-trailing-whitespace'	" Highlights trailing whitespace.
 Plugin 'mileszs/ack.vim'					" Run the search tool [ack].
 Plugin 'humiaozuzu/TabBar'					" Add tab bar.
+Plugin 'luzhlon/popup.vim'					" Popup the menu from the bottom.
 
 "-------------
 " Other Utils
@@ -51,6 +53,7 @@ Plugin 'nvie/vim-togglemouse'		" Toggle the mouse focus between Vim and terminal
 Plugin 'mbbill/fencview'			" Auto detect CJK and Unicode file encodings.
 Plugin 'skywind3000/asyncrun.vim'	" Run Async Shell Commands and Output to Quickfix Window.
 Plugin 'ctrlpvim/ctrlp.vim'			" Full path fuzzy file, buffer, mru, tag, ... finder.
+"Plugin 'uguu-org/vim-matrix-screensaver'	" Matrix Screen.
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
@@ -226,6 +229,26 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " Add your own custom formats or override the defaults
 "let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+
+"-----------------
+"   indentLine
+"-----------------
+let g:indentLine_char = '┆'
+
+" Vim
+let g:indentLine_color_term = 239
+
+" GVim
+let g:indentLine_color_gui = '#A4E57E'
+
+" none X terminal
+"let g:indentLine_color_tty_light = 7 " (default: 4)
+"let g:indentLine_color_dark = 1 " (default: 2)
+
+" Background (Vim, GVim)
+let g:indentLine_bgcolor_term = 202
+let g:indentLine_bgcolor_gui = '#FF5F00'
 
 
 "------------------
