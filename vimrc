@@ -1,9 +1,9 @@
-"------------------------------------------------"
-"                                                "
-" Author: xgfone                                 "
-" HomePage: https://github.com/xgfone/dot-vimrc  "
-"                                                "
-"------------------------------------------------"
+"--------------------------------------------------------"
+"                                                        "
+" Author: xgfone                                         "
+" HomePage: https://github.com/xgfone/dot-vimrc          "
+"                                                        "
+"--------------------------------------------------------"
 
 "=========================================================
 "                 Try To Load Plugins
@@ -220,7 +220,6 @@ nnoremap <Leader>wk <C-W>k
 nnoremap <Leader>wj <C-W>j
 nnoremap <Leader>wh <C-W>h
 nnoremap <Leader>wl <C-W>l
-
 
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
