@@ -3,7 +3,7 @@
 ## Install
 ```bash
 $ curl -fLo ~/.vimrc --create-dirs \
-    https://raw.githubusercontent.com/xgfone/dot-vimrc/xgfone/vimrc--create-dirs
+    https://raw.githubusercontent.com/xgfone/dot-vimrc/xgfone/vimrc
 ```
 
 ## Plugins
