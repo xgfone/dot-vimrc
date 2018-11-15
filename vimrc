@@ -99,7 +99,7 @@ set background=dark
 color desert
 
 " Highlight
-set cursorline              " Highlight the cursor line
+"set cursorline             " Highlight the cursor line
 set colorcolumn=80,100,120  " Highlight the columns
 
 " Search
