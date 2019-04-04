@@ -12,8 +12,8 @@ try
 	source ~/.vim/plugins.vim
 catch
 	" Format the status line
-	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ [%{&ff}]\
-	set statusline+=%p%%[%{GetFileSize()}]\ L:%l\ C:%c
+	set statusline=CWD:\ %{getcwd()}%m%r%h\ %w\ %y\ [%{&ff}]
+	set statusline+=\ %p%%[%{GetFileSize()}]\ L:%l\ C:%c
 	set statusline+=%{strftime(\"\ %Y-%m-%d\ %H:%M:%S\")}
 
 	" Delete the trailing whitespace automatically.
